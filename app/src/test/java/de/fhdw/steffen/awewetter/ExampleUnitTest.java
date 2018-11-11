@@ -1,4 +1,4 @@
-package com.pb.fhdw.awewetter;
+package de.fhdw.steffen.awewetter;
 
 import org.junit.Test;
 

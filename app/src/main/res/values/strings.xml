@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">AweWetter</string>
+    <string name="app_name">Wetter Master</string>
+
+    <!-- Navigation -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Fragment settings-->
+    <string name="fragment_settings_city">Ort</string>
+    <string name="fragment_settings_weather">Wetter</string>
+    <string name="fragment_settings_sport">Sportart</string>
+
+    <!-- Fragment home -->
+    <string name="fragment_home_city">Wetter in: </string>
+    <string name="fragment_home_temperature">Temperatur: </string>
+    <string name="fragment_home_precipitation">Niederschlag: </string>
+    <string name="fragment_home_sunrise">Sonnenaufgang: </string>
+    <string name="fragment_home_sunset">Sonnenuntergang:</string>
+    <string name="fragment_home_information_perfect">Perfektes Wetter zum </string>
+    <string name="fragment_home_information_bad">Wetter ist schlecht zum </string>
+    <string name="fragment_home_update">Letzte Aktualisierung:</string>
+
+    <!-- Fragment weather -->
+    <string name="fragment_weather_list">Liste</string>
+    <string name="fragment_weather_graphic">Grafiken</string>
 </resources>
