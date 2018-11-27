@@ -1,5 +1,6 @@
 package de.fhdw.steffen.awewetter.activitys;
 
+import de.fhdw.steffen.awewetter.classes.Server;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +16,11 @@ import de.fhdw.steffen.awewetter.R;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        server = new Server().getServer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
