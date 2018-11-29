@@ -1,3 +1,13 @@
+/**
+ * WeatherFragment
+ *
+ * Fragment, zur Darstellung der Tabbar,
+ * sowie die Interaktionen mit dieser.
+ *
+ * @author Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.os.Bundle;
@@ -19,6 +29,13 @@ import de.fhdw.steffen.awewetter.R;
 
 public class WeatherFragment extends Fragment {
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +53,10 @@ public class WeatherFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @param viewPager
+     */
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
 
@@ -45,6 +66,9 @@ public class WeatherFragment extends Fragment {
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     *
+     */
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

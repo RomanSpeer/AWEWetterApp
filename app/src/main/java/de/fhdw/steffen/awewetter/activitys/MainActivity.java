@@ -1,3 +1,10 @@
+/**
+ * MainActivity
+ *
+ * @author Steffen Höltje, Roman Speer
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import de.fhdw.steffen.awewetter.classes.Server;
@@ -18,6 +25,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private Server server;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         server = new Server().getServer();
@@ -43,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
 
@@ -56,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     *
+     * @param menuItem
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 

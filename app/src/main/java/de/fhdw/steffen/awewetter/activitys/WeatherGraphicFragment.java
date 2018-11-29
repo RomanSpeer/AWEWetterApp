@@ -1,3 +1,12 @@
+/**
+ * WeatherGraphicFragment
+ *
+ * Fragment, zur Darstellung der Wetter-Grafiken.
+ *
+ * @author Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.os.Bundle;
@@ -12,6 +21,13 @@ import de.fhdw.steffen.awewetter.R;
 
 public class WeatherGraphicFragment extends Fragment {
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

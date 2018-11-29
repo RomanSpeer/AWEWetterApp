@@ -1,3 +1,14 @@
+/**
+ *
+ * HomeFragment
+ * Darstellung der Startseite der App.
+ * Hier wird eine Uhr sowie bei hinterlegten Daten
+ * auch die aktuellen Wetterinformationen angezeigt.
+ *
+ * @author Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.os.Bundle;
@@ -16,7 +27,6 @@ import de.fhdw.steffen.awewetter.R;
 
 public class HomeFragment extends Fragment {
 
-    //Views
     private View viewHome;
     public LinearLayout linearLayoutWeatherHome;
     public TextView textViewCityHome;
@@ -31,6 +41,7 @@ public class HomeFragment extends Fragment {
     private boolean citySet = true;
 
     //Strings weather
+
     private String city = "";
     private String temerature = "";
     private String precipitation = "";
@@ -39,6 +50,13 @@ public class HomeFragment extends Fragment {
     private String information = "";
     private String update = "";
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

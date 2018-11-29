@@ -1,3 +1,14 @@
+/**
+ * WeatherListFragment
+ *
+ * Fragment, zur Darstellung der Wetterinformationen für
+ * die nächsten Tage. Es wird die Temperatur, der Niderschlag,
+ * ... angezeigt.
+ *
+ * @author Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.os.Bundle;
@@ -16,7 +27,13 @@ import de.fhdw.steffen.awewetter.R;
 public class WeatherListFragment extends Fragment {
 
 
-
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

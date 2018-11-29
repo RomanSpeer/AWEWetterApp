@@ -1,3 +1,15 @@
+/**
+ * SettingsFragment
+ * Eingabe des Ortes wofür das Wetter angezeigt werden soll
+ * und die Auswahl der Sportart.
+ * Ist ein Ort mehrmals verfügbar kann der genaue Ort ausgewählt werden.
+ * Bei Fehlerhaften eingaben werden Fehlermeldungen ausgegeben.
+ *
+ *
+ * @author Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.os.Bundle;
@@ -26,6 +38,13 @@ public class SettingsFragment extends Fragment {
     private ImageButton btnSave;
     private boolean isClickSave = false;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
