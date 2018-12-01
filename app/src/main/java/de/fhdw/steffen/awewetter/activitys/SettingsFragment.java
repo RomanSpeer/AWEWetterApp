@@ -12,6 +12,8 @@
 
 package de.fhdw.steffen.awewetter.activitys;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import de.fhdw.steffen.awewetter.R;
 public class SettingsFragment extends Fragment {
 
     private View viewSettings;
+    private LinearLayout linearLayoutCitySelect;
     private Spinner spinnerSport;
     private EditText editTextCity;
     private ImageButton btnSave;
@@ -50,6 +54,7 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         viewSettings = inflater.inflate(R.layout.fragment_settings, container, false);
+        linearLayoutCitySelect = viewSettings.findViewById(R.id.linearLayoutCitySelect);
         spinnerSport = viewSettings.findViewById(R.id.spinnerSport);
         editTextCity = viewSettings.findViewById(R.id.editTextCity);
         btnSave = viewSettings.findViewById(R.id.btnSave);
@@ -82,9 +87,21 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        String[] items = new String[]{"Fahrrad", "Laufen", " "};
+        linearLayoutCitySelect.setVisibility(View.INVISIBLE);
+
+        String[] items = new String[]{"Kein Sport","Fahrrad fahren", "Laufen", "Fallschirmspringen", "Segeln"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(viewSettings.getContext(), android.R.layout.simple_dropdown_item_1line, items);
         spinnerSport.setAdapter(adapter);
+
+        SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+
+        if(!preferences.getAll().isEmpty())
+        {
+            editTextCity.setText(preferences.getString("cityName", ""));
+            int myvar = preferences.getInt("var1", 0);
+            spinnerSport.setSelection(adapter.getPosition(preferences.getString("sportType", "")));
+        }
+
 
         return viewSettings;
     }
@@ -111,6 +128,13 @@ public class SettingsFragment extends Fragment {
         {
             //check if city exists
             //nur einmal vorhanden dann speichern sonst auswahl anzeigen
+
+            //speichern der Daten
+            SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("cityName", cityName);
+            editor.putString("sportType", sportName);
+            editor.commit();
         }
     }
 

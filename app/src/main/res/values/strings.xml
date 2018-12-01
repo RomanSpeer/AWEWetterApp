@@ -7,6 +7,7 @@
 
     <!-- Fragment settings-->
     <string name="fragment_settings_city">Ort</string>
+    <string name="fragment_settings_city_select">Bitte Ort wählen</string>
     <string name="fragment_settings_weather">Wetter</string>
     <string name="fragment_settings_sport">Sportart</string>
 

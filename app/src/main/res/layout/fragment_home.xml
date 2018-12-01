@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_weight="1">
 
     <AnalogClock
         android:id="@+id/simpleAnalogClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/corner_clock"
         android:padding="50dp" />
 
@@ -19,18 +20,21 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
         android:orientation="vertical"
         android:background="@drawable/corner_home"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/linearLayoutWeatherHome">
 
         <TextView
             android:id="@+id/textViewCityHome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -40,23 +44,25 @@
     <ImageView
         android:id="@+id/imageViewWeatherHome"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:background="@drawable/ic_save"
-        app:srcCompat="@android:color/transparent" />
+        app:srcCompat="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/textViewTemperatureHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/textViewPrecipitationHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
@@ -65,7 +71,8 @@
     <TextView
         android:id="@+id/textViewSunriseHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
@@ -74,7 +81,8 @@
     <TextView
         android:id="@+id/textViewSunsetHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
@@ -83,7 +91,8 @@
     <TextView
         android:id="@+id/textViewInformationHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
@@ -92,11 +101,11 @@
     <TextView
         android:id="@+id/textViewUpdateHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"
         android:text="TextView" />
 
     </LinearLayout>
