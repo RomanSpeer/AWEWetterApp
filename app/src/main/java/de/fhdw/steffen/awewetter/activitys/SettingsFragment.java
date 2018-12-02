@@ -40,7 +40,10 @@ public class SettingsFragment extends Fragment {
     private Spinner spinnerSport;
     private EditText editTextCity;
     private ImageButton btnSave;
+
     private boolean isClickSave = false;
+    private String cityName = "";
+    private String cityWithoutSpace = "";
 
     /**
      *
@@ -98,10 +101,8 @@ public class SettingsFragment extends Fragment {
         if(!preferences.getAll().isEmpty())
         {
             editTextCity.setText(preferences.getString("cityName", ""));
-            int myvar = preferences.getInt("var1", 0);
             spinnerSport.setSelection(adapter.getPosition(preferences.getString("sportType", "")));
         }
-
 
         return viewSettings;
     }
@@ -109,8 +110,8 @@ public class SettingsFragment extends Fragment {
     private void btnSaveClick() {
 
         //city String
-        String cityName = editTextCity.getText().toString();
-        String cityWithoutSpace = cityName.replaceAll(" ","");
+        cityName = editTextCity.getText().toString();
+        cityWithoutSpace = cityName.replaceAll(" ","");
 
         //sport string
         String sportName = spinnerSport.getSelectedItem().toString();
