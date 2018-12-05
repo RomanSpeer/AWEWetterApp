@@ -24,4 +24,7 @@
     <!-- Fragment weather -->
     <string name="fragment_weather_list">Liste</string>
     <string name="fragment_weather_graphic">Grafiken</string>
+
+    <!-- SplahScreen -->
+    <string name="splahScreen_name">WetterMaster</string>
 </resources>

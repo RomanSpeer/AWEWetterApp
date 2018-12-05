@@ -20,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.io.File;
+
 import de.fhdw.steffen.awewetter.R;
 import de.fhdw.steffen.awewetter.classes.Server;
 
@@ -32,6 +34,14 @@ public class SplahScreen extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splahscreen);
+
+        //Ornder erstellen wenn nicht vorhanden
+        final File weatherDir = new File(getFilesDir().getAbsolutePath()+"/WeatherData");
+        if(!weatherDir.exists())
+        {
+            weatherDir.mkdir();
+        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
