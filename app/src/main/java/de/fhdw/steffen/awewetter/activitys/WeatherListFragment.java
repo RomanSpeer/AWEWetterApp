@@ -11,6 +11,8 @@
 
 package de.fhdw.steffen.awewetter.activitys;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,23 +47,27 @@ public class WeatherListFragment extends Fragment{
 
         listView = viewWeatherLlist.findViewById(R.id.list);
 
-        weatherArrayList = new ArrayList<>();
+        SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
 
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
-        weatherArrayList.add(new Weather("1","1","1","1","1","1"));
+        if (!preferences.getAll().isEmpty())
+        {
+            weatherArrayList = new ArrayList<>();
 
-        adapter = new WeatherListFragmentAdapter(weatherArrayList,getActivity().getApplicationContext());
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
 
-        listView.setAdapter(adapter);
+            adapter = new WeatherListFragmentAdapter(weatherArrayList,getActivity().getApplicationContext());
+
+            listView.setAdapter(adapter);
+        }
 
         return viewWeatherLlist;
 

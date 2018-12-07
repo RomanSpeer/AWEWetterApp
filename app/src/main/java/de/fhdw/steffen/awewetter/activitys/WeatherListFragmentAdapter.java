@@ -69,10 +69,11 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
             result=convertView;
         }
 
+        viewHolder.imageViewIcon.setImageResource(R.drawable.ic_cloud);
         viewHolder.textViewDay.setText(dataModel.getDayWeather());
-        viewHolder.textViewMaxTemp.setText(dataModel.getTempMaxWeather());
-        viewHolder.textViewMinTemp.setText(dataModel.getTempMinWeather());
-        viewHolder.textViewWindSpeed.setText(dataModel.getWindSpeedWeather());
+        viewHolder.textViewMaxTemp.setText(String.valueOf(dataModel.getTempMaxWeather()));
+        viewHolder.textViewMinTemp.setText(String.valueOf(dataModel.getTempMinWeather()));
+        viewHolder.textViewWindSpeed.setText(String.valueOf(dataModel.getWindSpeedWeather()));
         viewHolder.textViewWindDirection .setText(dataModel.getWindDirectionWeather());
         // Return the completed view to render on screen
         return convertView;

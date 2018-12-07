@@ -136,6 +136,7 @@ public class SettingsFragment extends Fragment {
             editor.putString("cityName", cityName);
             editor.putString("sportType", sportName);
             editor.commit();
+            Toast.makeText(getActivity(), "Daten gespeichert", Toast.LENGTH_LONG).show();
         }
     }
 
