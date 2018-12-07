@@ -51,10 +51,10 @@ public class Server {
      * @throws REXPMismatchException
      * @throws REngineException
      */
-    public void connect(String path, int port) throws REXPMismatchException, REngineException
+    public void connect(String path) throws REXPMismatchException, REngineException
     {
         //Neue Verbindung herstellen
-        c = new RConnection();
+        c = new RConnection(path);
 
         //Verbindung prüfen
         if(c.isConnected())

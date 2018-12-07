@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.fhdw.steffen.awewetter.R;
+import de.fhdw.steffen.awewetter.classes.Server;
 
 public class HomeFragment extends Fragment {
 
