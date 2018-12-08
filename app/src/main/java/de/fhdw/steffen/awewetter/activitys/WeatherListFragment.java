@@ -65,16 +65,16 @@ public class WeatherListFragment extends Fragment{
         {
             weatherArrayList = new ArrayList<>();
 
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
-            weatherArrayList.add(new Weather("1","1",1,1,1,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
 
             adapter = new WeatherListFragmentAdapter(weatherArrayList,getActivity().getApplicationContext());
 

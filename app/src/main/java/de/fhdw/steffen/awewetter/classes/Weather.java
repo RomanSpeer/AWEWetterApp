@@ -8,6 +8,7 @@ public class Weather
     private double tempMinWeather = 0;
     private double windSpeedWeather = 0;
     private  String windDirectionWeather = "";
+    private String city;
 
 
     //Immoment nur zum Testen:
@@ -16,14 +17,23 @@ public class Weather
 
     }
 
-    public Weather(String day, String icon, double tempMax, double tempMin, double windSpeed, String windDirection)
+    public Weather(String city, String day, String icon, double tempMax, double tempMin, double windSpeed, String windDirection)
     {
+        this.city = city;
         this.dayWeather = day;
         this. iconWeather = icon;
         this.tempMaxWeather = tempMax;
         this.tempMinWeather = tempMin;
         this.windSpeedWeather = windSpeed;
         this.windDirectionWeather = windDirection;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getDayWeather() {
