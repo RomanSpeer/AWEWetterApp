@@ -10,6 +10,7 @@
 
 package de.fhdw.steffen.awewetter.activitys;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,16 +19,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.Rserve.RConnection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.steffen.awewetter.R;
+import de.fhdw.steffen.awewetter.classes.Server;
 
 public class WeatherFragment extends Fragment {
+
+    private Server server;
+    private MyTask mt;
 
     /**
      *
@@ -39,6 +48,9 @@ public class WeatherFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        mt =  new MyTask();
+        mt.execute();
 
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         // Setting ViewPager for each Tabs
@@ -95,6 +107,33 @@ public class WeatherFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    class MyTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                server = new Server().getServer();
+                server.connect("10.0.2.2");
+                if(server.isConnected())
+                    Log.d("Connection", "Verbunden");
+                RConnection c = server.getConnection();
+                REXP x = c.eval("R.version.string");
+            } catch (Exception x) {
+                x.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
         }
     }
 }

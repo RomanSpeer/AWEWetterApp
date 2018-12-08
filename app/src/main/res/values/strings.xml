@@ -19,9 +19,14 @@
     <string name="fragment_home_sunset">Sonnenuntergang:</string>
     <string name="fragment_home_information_perfect">Perfektes Wetter zum </string>
     <string name="fragment_home_information_bad">Wetter ist schlecht zum </string>
+    <string name="fragment_home_information_bad_good">Wetter ist nicht zu schlecht und nicht zu gut zum </string>
+    <string name="fragment_home_information_not_given">Keine Sportart ausgewählt </string>
     <string name="fragment_home_update">Letzte Aktualisierung:</string>
 
     <!-- Fragment weather -->
     <string name="fragment_weather_list">Liste</string>
     <string name="fragment_weather_graphic">Grafiken</string>
+
+    <!-- SplahScreen -->
+    <string name="splahScreen_name">WetterMaster</string>
 </resources>

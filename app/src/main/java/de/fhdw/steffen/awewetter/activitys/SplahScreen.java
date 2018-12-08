@@ -28,13 +28,14 @@ import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.REngineException;
 
+import java.io.File;
+
 import de.fhdw.steffen.awewetter.R;
 import de.fhdw.steffen.awewetter.classes.Server;
 
 public class SplahScreen extends AppCompatActivity{
     private static int SPLASH_TIME_OUT = 4000;
     private Server server;
-
     private MyTask mt;
     //Hier muss der Download der Daten stattfinden wenn Daten hinterlegt sind...
 
@@ -48,6 +49,14 @@ public class SplahScreen extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splahscreen);
+
+        //Ornder erstellen wenn nicht vorhanden
+        final File weatherDir = new File(getFilesDir().getAbsolutePath()+"/WeatherData");
+        if(!weatherDir.exists())
+        {
+            weatherDir.mkdir();
+        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -59,7 +68,6 @@ public class SplahScreen extends AppCompatActivity{
     }
 
     class MyTask extends AsyncTask<Void, Void, Void> {
-        int port = 6666;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -72,10 +80,8 @@ public class SplahScreen extends AppCompatActivity{
                 server.connect("10.0.2.2");
                 if(server.isConnected())
                     Log.d("Connection", "Verbunden");
-                // R-Version ermitteln und ausgeben:
-                //     REXP x = c.eval("R.version.string");
-                //   System.out.println(x.asString());
-
+                RConnection c = server.getConnection();
+                REXP x = c.eval("R.version.string");
             } catch (Exception x) {
                 x.printStackTrace();
             }

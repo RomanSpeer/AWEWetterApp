@@ -21,11 +21,6 @@ public class Server {
     private RConnection c;
     public Server server;
 
-    /**
-     *
-     */
-    public Server() {
-    }
 
     //Singelton-Sever erstellen/ zurückgeben
 
@@ -44,10 +39,14 @@ public class Server {
         return server;
     }
 
+    public RConnection getConnection()
+    {
+        return c;
+    }
+
     /**
      *
      * @param path
-     * @param port
      * @throws REXPMismatchException
      * @throws REngineException
      */
@@ -55,14 +54,6 @@ public class Server {
     {
         //Neue Verbindung herstellen
         c = new RConnection(path);
-
-        //Verbindung prüfen
-        if(c.isConnected())
-            System.out.println("Verbindung wurde aufgebaut");
-
-        // R-Version ermitteln und ausgeben:
-        REXP x = c.eval("R.version.string");
-        System.out.println(x.asString());
     }
 
     /**

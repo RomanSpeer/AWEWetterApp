@@ -14,12 +14,14 @@ package de.fhdw.steffen.awewetter.activitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +33,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.Rserve.RConnection;
+
 import de.fhdw.steffen.awewetter.R;
+import de.fhdw.steffen.awewetter.classes.Server;
 
 public class SettingsFragment extends Fragment {
 
@@ -45,6 +51,9 @@ public class SettingsFragment extends Fragment {
     private String cityName = "";
     private String cityWithoutSpace = "";
 
+    private Server server;
+    private MyTask mt;
+
     /**
      *
      * @param inflater
@@ -55,6 +64,9 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        mt =  new MyTask();
+        mt.execute();
 
         viewSettings = inflater.inflate(R.layout.fragment_settings, container, false);
         linearLayoutCitySelect = viewSettings.findViewById(R.id.linearLayoutCitySelect);
@@ -136,6 +148,34 @@ public class SettingsFragment extends Fragment {
             editor.putString("cityName", cityName);
             editor.putString("sportType", sportName);
             editor.commit();
+            Toast.makeText(getActivity(), "Daten gespeichert", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    class MyTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                server = new Server().getServer();
+                server.connect("10.0.2.2");
+                if(server.isConnected())
+                    Log.d("Connection", "Verbunden");
+                RConnection c = server.getConnection();
+                REXP x = c.eval("R.version.string");
+            } catch (Exception x) {
+                x.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
         }
     }
 

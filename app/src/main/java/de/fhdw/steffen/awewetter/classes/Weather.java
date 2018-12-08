@@ -4,9 +4,9 @@ public class Weather
 {
     private String dayWeather = "";
     private String iconWeather = "";
-    private String tempMaxWeather = "";
-    private String tempMinWeather = "";
-    private String windSpeedWeather = "";
+    private double tempMaxWeather = 0;
+    private double tempMinWeather = 0;
+    private double windSpeedWeather = 0;
     private  String windDirectionWeather = "";
 
 
@@ -16,7 +16,7 @@ public class Weather
 
     }
 
-    public Weather(String day, String icon, String tempMax, String tempMin, String windSpeed, String windDirection)
+    public Weather(String day, String icon, double tempMax, double tempMin, double windSpeed, String windDirection)
     {
         this.dayWeather = day;
         this. iconWeather = icon;
@@ -42,27 +42,27 @@ public class Weather
         this.iconWeather = iconWeather;
     }
 
-    public String getTempMaxWeather() {
+    public double getTempMaxWeather() {
         return tempMaxWeather;
     }
 
-    public void setTempMaxWeather(String tempMaxWeather) {
+    public void setTempMaxWeather(double tempMaxWeather) {
         this.tempMaxWeather = tempMaxWeather;
     }
 
-    public String getTempMinWeather() {
+    public double getTempMinWeather() {
         return tempMinWeather;
     }
 
-    public void setTempMinWeather(String tempMinWeather) {
+    public void setTempMinWeather(double tempMinWeather) {
         this.tempMinWeather = tempMinWeather;
     }
 
-    public String getWindSpeedWeather() {
+    public double getWindSpeedWeather() {
         return windSpeedWeather;
     }
 
-    public void setWindSpeedWeather(String windSpeedWeather) {
+    public void setWindSpeedWeather(double windSpeedWeather) {
         this.windSpeedWeather = windSpeedWeather;
     }
 
