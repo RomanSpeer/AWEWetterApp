@@ -34,6 +34,7 @@ import org.rosuda.REngine.Rserve.RConnection;
 import de.fhdw.steffen.awewetter.R;
 import de.fhdw.steffen.awewetter.classes.Server;
 import de.fhdw.steffen.awewetter.classes.Weather;
+import de.fhdw.steffen.awewetter.classes.WeatherList;
 
 public class HomeFragment extends Fragment {
 
@@ -60,16 +61,6 @@ public class HomeFragment extends Fragment {
     private String information = "";
     private String update = "";
 
-
-    private String city = "";
-    private String day = "";
-    private String icon = "";
-    private double tempMax = 0d;
-    private double tempMin = 0d;
-    private double windSpeed = 0d;
-    private String windDirection = "";
-
-    private Weather currentWeather = null;
     private Server server;
     private MyTask mt;
 
@@ -185,21 +176,6 @@ public class HomeFragment extends Fragment {
                     Log.d("Connection", "Verbunden");
                 RConnection c = server.getConnection();
                 REXP x = c.eval("R.version.string");
-                c.eval("library(rjson)");
-                c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/weather?q=Paderborn,de&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
-
-                REXP jsonData = c.eval("json_data <- fromJSON(file=json_file)");
-                city = c.eval("json_data$name").asString();
-                day = Calendar.getInstance().getTime().toString();
-                icon =  c.eval("json_data$weather[[1]]$main").asString();
-                tempMax =  c.eval("json_data$main$temp_max").asDouble();
-                tempMin =  c.eval("json_data$main$temp_min").asDouble();
-                windSpeed =  c.eval("json_data$wind$speed").asDouble();
-                windDirection =  c.eval("json_data$wind$deg").asString();
-
-                currentWeather = new Weather(city,day,icon, new Double(tempMax),
-                       new Double(tempMin), new Double(windSpeed), windDirection);
-
 
             } catch (Exception x) {
                 x.printStackTrace();
