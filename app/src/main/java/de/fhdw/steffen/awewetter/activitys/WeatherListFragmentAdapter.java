@@ -82,7 +82,40 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
             result=convertView;
         }
 
-        viewHolder.imageViewIcon.setImageResource(R.drawable.ic_cloud);
+        switch (dataModel.getIconWeather())
+        {
+            case "01d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.sun01d);
+                break;
+            case "02d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.fewclouds02d);
+                break;
+            case "03d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.scatteredclouds03d);
+                break;
+            case "04d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.brokenclouds04d);
+                break;
+            case "09d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.showerrain09d);
+                break;
+            case "10d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.rain10d);
+                break;
+            case "11d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.thunderstorm11d);
+                break;
+            case "13d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.snow13d);
+                break;
+            case "50d":
+                viewHolder.imageViewIcon.setImageResource(R.drawable.mist50d);
+                break;
+            default:
+                viewHolder.imageViewIcon.setImageResource(R.drawable.image_not_found);
+                ;
+        }
+
         viewHolder.textViewDay.setText(dataModel.getDayWeather());
         viewHolder.textViewMaxTemp.setText(String.valueOf(dataModel.getTempMaxWeather()));
         viewHolder.textViewMinTemp.setText(String.valueOf(dataModel.getTempMinWeather()));

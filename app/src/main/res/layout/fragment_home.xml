@@ -45,7 +45,6 @@
         android:id="@+id/imageViewWeatherHome"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/ic_save"
         app:srcCompat="@android:color/transparent"/>
 
     <TextView
