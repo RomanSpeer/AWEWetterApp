@@ -19,12 +19,12 @@ public class Server {
      *
      */
     private RConnection c;
-    public Server server;
+    private static Server serverInstance;
 
     /**
      *
      */
-    public Server() {
+    private static Server() {
     }
 
     //Singelton-Sever erstellen/ zurückgeben
@@ -33,15 +33,15 @@ public class Server {
      *
      * @return
      */
-    public Server getServer()
+    public static Server getServer()
     {
         //Prüfen ob der Server null ist
-        if (server == null)
+        if (serverInstance == null)
         {
             //Neuen Server erstellen
-            server = new Server();
+            serverInstance = new Server();
         }
-        return server;
+        return serverInstance;
     }
 
     /**
