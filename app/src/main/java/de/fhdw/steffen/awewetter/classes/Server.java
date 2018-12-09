@@ -24,7 +24,7 @@ public class Server {
     /**
      *
      */
-    private static Server() {
+    private Server() {
     }
 
     //Singelton-Sever erstellen/ zurückgeben
