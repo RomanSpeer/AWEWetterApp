@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
         if (!preferences.getAll().isEmpty())
         {
             //Hier currentWeather aus der liste holen
-            Weather currentWeather = new Weather();
+            Weather currentWeather = new Weather("1","1","01d",1d,1d,1d,"1");
 
             linearLayoutWeatherHome.setVisibility(View.VISIBLE);
 
@@ -113,6 +113,40 @@ public class HomeFragment extends Fragment {
             textViewSunriseHome.setText(getResources().getString(R.string.fragment_home_sunrise) + sunrise);
             textViewSunsetHome.setText(getResources().getString(R.string.fragment_home_sunset) + sunset);
             textViewUpdateHome.setText(getResources().getString(R.string.fragment_home_update) + update);
+
+            switch (currentWeather.getIconWeather())
+            {
+                case "01d":
+                    imageViewWeatherHome.setImageResource(R.drawable.sun01d);
+                    break;
+                case "02d":
+                    imageViewWeatherHome.setImageResource(R.drawable.fewclouds02d);
+                    break;
+                case "03d":
+                    imageViewWeatherHome.setImageResource(R.drawable.scatteredclouds03d);
+                    break;
+                case "04d":
+                    imageViewWeatherHome.setImageResource(R.drawable.brokenclouds04d);
+                    break;
+                case "09d":
+                    imageViewWeatherHome.setImageResource(R.drawable.showerrain09d);
+                    break;
+                case "10d":
+                    imageViewWeatherHome.setImageResource(R.drawable.rain10d);
+                    break;
+                case "11d":
+                    imageViewWeatherHome.setImageResource(R.drawable.thunderstorm11d);
+                    break;
+                case "13d":
+                    imageViewWeatherHome.setImageResource(R.drawable.snow13d);
+                    break;
+                case "50d":
+                    imageViewWeatherHome.setImageResource(R.drawable.mist50d);
+                    break;
+                default:
+                    imageViewWeatherHome.setImageResource(R.drawable.image_not_found);
+                    ;
+            }
 
             //Logik wetter geeignet sport
             String sportType = preferences.getString("sportType", "");
@@ -161,7 +195,6 @@ public class HomeFragment extends Fragment {
 
             textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_not_given) + information);
         }
-
         else
         {
             linearLayoutWeatherHome.setVisibility(View.INVISIBLE);
