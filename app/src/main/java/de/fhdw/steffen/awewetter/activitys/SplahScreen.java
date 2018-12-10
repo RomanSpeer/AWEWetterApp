@@ -65,9 +65,6 @@ public class SplahScreen extends AppCompatActivity{
 
         preferences = this.getApplicationContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
 
-        weatherList =  new WeatherList().getWeatherList();
-        List<Weather> weatherData = new ArrayList<Weather>();
-
         mt =  new MyTask();
         mt.execute();
 
@@ -137,9 +134,10 @@ public class SplahScreen extends AppCompatActivity{
                      //Wettertrend
                      c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+prefCity+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
 
+                     int count = c.eval("json_data$cnt").asInteger();
                      jsonData = c.eval("json_data <- fromJSON(file=json_file)");
                      city = c.eval("json_data$city$name").asString();
-                     for (int i = 1 ; i <= 40 ; i++) {
+                     for (int i = 1 ; i < count ; i++) {
                          Weather tmpWeather = null;
                          day = c.eval("json_data$list[["+ i + "]]$dt_txt").asString();
                          icon =  c.eval("json_data$list[["+ i + "]]$weather[[1]]$icon").asString();
