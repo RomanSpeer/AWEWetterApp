@@ -20,11 +20,11 @@ import java.util.List;
 
 public class WeatherList {
 
-    public static WeatherList weatherList;
+    private static WeatherList weatherList;
 
     private List<Weather> weatherData = new ArrayList<Weather>();
 
-    public WeatherList getWeatherList()
+    public static WeatherList getWeatherList()
     {
         //Prüfen ob der Server null ist
         if (weatherList == null)
@@ -35,7 +35,7 @@ public class WeatherList {
         return weatherList;
     }
 
-    public WeatherList()
+    private WeatherList()
     {
 
     }

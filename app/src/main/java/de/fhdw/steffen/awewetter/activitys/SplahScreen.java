@@ -106,7 +106,7 @@ public class SplahScreen extends AppCompatActivity{
                 RConnection c = server.getConnection();
 
                 if(c.isConnected()) {
-                    WeatherList weatherList = new WeatherList();
+                    WeatherList weatherList = WeatherList().getWeatherList();
 
                     String prefCity = preferences.getString("cityName", "");
 
