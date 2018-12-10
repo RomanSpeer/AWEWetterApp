@@ -1,6 +1,7 @@
 package de.fhdw.steffen.awewetter.classes;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -96,7 +97,7 @@ public class WeatherList {
         return sb.toString();
     }
 
-    public List<Weather> stringToList(String weather) {
+    public ArrayList<Weather> stringToList(String weather) {
         Gson gson = new Gson();
         TypeToken<List<Weather>> token = new TypeToken<List<Weather>>() {};
         return gson.fromJson(weather, token.getType());

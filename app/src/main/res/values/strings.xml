@@ -14,7 +14,7 @@
     <!-- Fragment home -->
     <string name="fragment_home_city">Wetter in: </string>
     <string name="fragment_home_temperature">Temperatur: </string>
-    <string name="fragment_home_precipitation">Niederschlag: </string>
+    <string name="fragment_home_precipitation">Luftfeuchtigkeit: </string>
     <string name="fragment_home_sunrise">Sonnenaufgang: </string>
     <string name="fragment_home_sunset">Sonnenuntergang:</string>
     <string name="fragment_home_information_perfect">Perfektes Wetter zum </string>

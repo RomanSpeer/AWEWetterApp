@@ -26,6 +26,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import java.util.Calendar;
 
 import org.rosuda.REngine.REXP;
@@ -56,10 +60,10 @@ public class HomeFragment extends Fragment {
     //wird denke nicht benutzt
     private String temerature = "";
     private String precipitation = "";
-    private String sunrise = "";
-    private String sunset = "";
     private String information = "";
     private String update = "";
+    private String sunrise = "";
+    private String sunset = "";
 
     private Server server;
     private MyTask mt;
@@ -93,17 +97,27 @@ public class HomeFragment extends Fragment {
 
         if (!preferences.getAll().isEmpty())
         {
+            WeatherList weatherList = WeatherList.getWeatherList();
             //Hier currentWeather aus der liste holen
-            Weather currentWeather = new Weather("1","1","01d",1d,1d,1d,"1");
+            Weather currentWeather = weatherList.getWeatherData().get(0);
+
+            Format dayFormatter = new SimpleDateFormat("HH:mm:ss");
+
+            Date sunriseDate=new java.util.Date((long)Integer.parseInt(currentWeather.getSunrise())*1000);
+            Date sunsetDate=new java.util.Date((long)Integer.parseInt(currentWeather.getSunset())*1000);
+
+
+            sunrise = dayFormatter.format(sunriseDate);
+            sunset = dayFormatter.format(sunsetDate);
 
             linearLayoutWeatherHome.setVisibility(View.VISIBLE);
 
-            textViewCityHome.setText(getResources().getString(R.string.fragment_home_city) + preferences.getString("cityName", ""));
-            textViewTemperatureHome.setText(getResources().getString(R.string.fragment_home_temperature) + temerature);
-            textViewPrecipitationHome.setText(getResources().getString(R.string.fragment_home_precipitation) + precipitation);
+            textViewCityHome.setText(getResources().getString(R.string.fragment_home_city) + currentWeather.getCity());
+            textViewTemperatureHome.setText(getResources().getString(R.string.fragment_home_temperature) + currentWeather.getCurrentTmp());
+            textViewPrecipitationHome.setText(getResources().getString(R.string.fragment_home_precipitation) + currentWeather.getHumidity());
             textViewSunriseHome.setText(getResources().getString(R.string.fragment_home_sunrise) + sunrise);
             textViewSunsetHome.setText(getResources().getString(R.string.fragment_home_sunset) + sunset);
-            textViewUpdateHome.setText(getResources().getString(R.string.fragment_home_update) + update);
+            textViewUpdateHome.setText(getResources().getString(R.string.fragment_home_update) + currentWeather.getDayWeather());
 
             switch (currentWeather.getIconWeather())
             {

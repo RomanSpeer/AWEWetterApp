@@ -32,6 +32,8 @@ import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.REngineException;
 
 import java.io.File;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -118,24 +120,35 @@ public class SplahScreen extends AppCompatActivity{
                     REXP jsonData = c.eval("json_data <- fromJSON(file=json_file)");
 
                     city = c.eval("json_data$name").asString();
-                    day = Calendar.getInstance().getTime().toString();
+                    Format yearFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    day = yearFormatter.format(Calendar.getInstance().getTime());
                     icon =  c.eval("json_data$weather[[1]]$icon").asString();
                     tempMax =  c.eval("json_data$main$temp_max").asDouble();
                     tempMin =  c.eval("json_data$main$temp_min").asDouble();
                     windSpeed =  c.eval("json_data$wind$speed").asDouble();
                     windDirection =  c.eval("json_data$wind$deg").asString();
+                    double currentTmp = c.eval("json_data$main$temp").asDouble();
+                    int sunrise = c.eval("json_data$sys$sunrise").asInteger();
+                    int sunset = c.eval("json_data$sys$sunset").asInteger();
+                    Double humidity = c.eval("json_data$main$humidity").asDouble();
 
                     currentWeather = new Weather(city,day,icon, new Double(tempMax),
                             new Double(tempMin), new Double(windSpeed), windDirection);
 
-                     List<Weather> weatherData = weatherList.getWeatherData();
+                    currentWeather.setCurrentTmp(currentTmp);
+                    currentWeather.setSunrise(String.valueOf(sunrise));
+                    currentWeather.setSunset(String.valueOf(sunset));
+                    currentWeather.setHumidity(humidity);
+
+                     ArrayList<Weather> weatherData = weatherList.getWeatherData();
                      weatherData.add(currentWeather);
 
                      //Wettertrend
                      c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+prefCity+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
 
-                     int count = c.eval("json_data$cnt").asInteger();
+
                      jsonData = c.eval("json_data <- fromJSON(file=json_file)");
+                     int count = c.eval("json_data$cnt").asInteger();
                      city = c.eval("json_data$city$name").asString();
                      for (int i = 1 ; i < count ; i++) {
                          Weather tmpWeather = null;
