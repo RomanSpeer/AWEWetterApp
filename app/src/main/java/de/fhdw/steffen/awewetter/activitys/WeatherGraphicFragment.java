@@ -145,68 +145,86 @@ public class WeatherGraphicFragment extends Fragment {
                 server.connect("10.0.2.2");
                 if(server.isConnected())
                     Log.d("Connection", "Verbunden");
-                RConnection c = server.getConnection();
-                REXP x = c.eval("R.version.string");
-                
-                //GET GRAPHICS
-                //TODO:
-                String location = "Paderborn";
+                RConnection connection = server.getConnection();
+                REXP version = connection.eval("R.version.string");
 
+                //TODO:
+                String location = "Paderborn,de";
+                if(location.equals("")) {
+                    location = "Paderborn,de";
+                }
                 // Request Data
-                c.eval("result <- \"http://api.openweathermap.org/data/2.5/weather?q=" + location + ",de&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
+                connection.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+location+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
+                connection.eval("library(rjson)");
+
+                REXP jsonData = connection.eval("json_data <- fromJSON(file=json_file)");
 
                 //Create lists
-                c.eval("maxForecast <- c()");
-                c.eval("avgForecast <- c()");
-                c.eval("lowForecast <- c()");
-                c.eval("pressure <- c()");
-                c.eval("humidity <- c()");
-                c.eval("windSpeed <- c()");
+                connection.eval("maxForecast <- c()");
+                connection.eval("avgForecast <- c()");
+                connection.eval("lowForecast <- c()");
+                connection.eval("pressure <- c()");
+                connection.eval("humidity <- c()");
+                connection.eval("windSpeed <- c()");
 
                 //Get Some Data
-                c.eval("items <- length$cnt");
+                connection.eval("items <- result[[3]]");
 
                 //Get WeatherData
-                c.eval("for (i in 1:items) {");
-                c.eval("avgForecast <- c(avgForecast, result[[4]][[i]][[2]][[1]] - 273.15)");
-                c.eval("maxForecast <- c(maxForecast, result[[4]][[i]][[2]][[3]] - 273.15)");
-                c.eval("lowForecast <- c(lowForecast, result[[4]][[i]][[2]][[2]] - 273.15)");
-                c.eval("pressure <- c(pressure, result[[4]][[i]][[2]][[4]])");
-                c.eval("humidity <- c(pressure, result[[4]][[i]][[2]][[5]])");
-                c.eval("windSpeed <- c(pressure, result[[4]][[i]][[5]][[1]])");
-                c.eval("}");
+                connection.eval("for (i in 1:items) {");
+                connection.eval("avgForecast <- c(avgForecast, result[[4]][[i]][[2]][[1]] - 273.15)");
+                connection.eval("maxForecast <- c(maxForecast, result[[4]][[i]][[2]][[3]] - 273.15)");
+                connection.eval("lowForecast <- c(lowForecast, result[[4]][[i]][[2]][[2]] - 273.15)");
+                connection.eval("pressure <- c(pressure, result[[4]][[i]][[2]][[4]])");
+                connection.eval("humidity <- c(pressure, result[[4]][[i]][[2]][[5]])");
+                connection.eval("windSpeed <- c(pressure, result[[4]][[i]][[5]][[1]])");
+                connection.eval("}");
 
                 //Calculate Next
                 for(int i = 8; i > 0; i--) {
                     //Calculate Weather
-                    c.eval("diff <- avgForecast[items-8+"+i+"] - avgForecast[items-16+"+i+"]");
-                    c.eval("avgForecast <- c(avgForecast, avgForecast[items-8+"+i+"] + diff)");
+                    connection.eval("diff <- avgForecast[items-8+"+i+"] - avgForecast[items-16+"+i+"]");
+                    connection.eval("avgForecast <- c(avgForecast, avgForecast[items-8+"+i+"] + diff)");
 
-                    c.eval("diff <- maxForecast[items-8+"+i+"] - maxForecast[items-16+"+i+"]");
-                    c.eval("maxForecast <- c(maxForecast, maxForecast[items-8+"+i+"] + diff)");
+                    connection.eval("diff <- maxForecast[items-8+"+i+"] - maxForecast[items-16+"+i+"]");
+                    connection.eval("maxForecast <- c(maxForecast, maxForecast[items-8+"+i+"] + diff)");
 
-                    c.eval("diff <- lowForecast[items-8+"+i+"] - lowForecast[items-16+"+i+"]");
-                    c.eval("lowForecast <- c(lowForecast, lowForecast[items-8+"+i+"] + diff)");
+                    connection.eval("diff <- lowForecast[items-8+"+i+"] - lowForecast[items-16+"+i+"]");
+                    connection.eval("lowForecast <- c(lowForecast, lowForecast[items-8+"+i+"] + diff)");
 
                     //Calculate Weather attributes
-                    c.eval("diff <- pressure[items-8+"+i+"] - pressure[items-16+"+i+"]");
-                    c.eval("pressure <- c(pressure, pressure[items-8+"+i+"] + diff)");
+                    connection.eval("diff <- pressure[items-8+"+i+"] - pressure[items-16+"+i+"]");
+                    connection.eval("pressure <- c(pressure, pressure[items-8+"+i+"] + diff)");
 
-                    c.eval("diff <- humidity[items-8+"+i+"] - humidity[items-16+"+i+"]");
-                    c.eval("humidity <- c(humidity, humidity[items-8+"+i+"] + diff)");
+                    connection.eval("diff <- humidity[items-8+"+i+"] - humidity[items-16+"+i+"]");
+                    connection.eval("humidity <- c(humidity, humidity[items-8+"+i+"] + diff)");
 
-                    c.eval("diff <- windSpeed[items-8+"+i+"] - windSpeed[items-16+"+i+"]");
-                    c.eval("windSpeed <- c(windSpeed, windSpeed[items-8+"+i+"] + diff)");
+                    connection.eval("diff <- windSpeed[items-8+"+i+"] - windSpeed[items-16+"+i+"]");
+                    connection.eval("windSpeed <- c(windSpeed, windSpeed[items-8+"+i+"] + diff)");
                 }
                 //Plot Data
-                c.eval("plot(avgForecast, type=\"o\", col=\"blue\")");
-                c.eval("lines(maxForecast, type=\"o\", col=\"red\")");
-                REXP plotWeather = c.eval("lines(lowFrecast, type=\"o\", col=\"red\")");
+                connection.eval("plot(avgForecast, type=\"o\", col=\"blue\")");
+                connection.eval("title(ylab=\"Temperatur\")");
+                //connection.eval("axis(side=1, at = 1:4, labels=LETTERS[1:4])");
+                connection.eval("lines(maxForecast, type=\"o\", col=\"red\")");
+                REXP plotWeather = connection.eval("lines(lowFrecast, type=\"o\", col=\"red\")");
+                Log.d("**WGF**","doInBackground: " + plotWeather.asString());
+                plotWeather.asBytes();
 
-                REXP plotPressure = c.eval("plot(pressure, type=\"o\", col=\"blue\")");
-                REXP plotHumidity = c.eval("plot(humidity, type=\"o\", col=\"blue\")");
-                REXP plotWindSpeed = c.eval("plot(windSpeed, type=\"o\", col=\"blue\")");
-                
+                REXP plotPressure = connection.eval("plot(pressure, type=\"o\", col=\"blue\")");
+                connection.eval("title(ylab=\"Temperatur\")");
+
+                plotPressure.asBytes();
+
+
+                REXP plotHumidity = connection.eval("plot(humidity, type=\"o\", col=\"blue\")");
+                plotHumidity.asBytes();
+
+
+                REXP plotWindSpeed = connection.eval("plot(windSpeed, type=\"o\", col=\"blue\")");
+                plotWindSpeed.asBytes();
+
+
             } catch (Exception x) {
                 x.printStackTrace();
             }
