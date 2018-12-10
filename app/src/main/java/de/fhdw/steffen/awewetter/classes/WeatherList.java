@@ -22,7 +22,7 @@ public class WeatherList {
 
     private static WeatherList weatherList;
 
-    private List<Weather> weatherData = new ArrayList<Weather>();
+    private ArrayList<Weather> weatherData = new ArrayList<Weather>();
 
     public static WeatherList getWeatherList()
     {
@@ -40,12 +40,12 @@ public class WeatherList {
 
     }
 
-    public List<Weather> getWeatherData() {
+    public ArrayList<Weather> getWeatherData() {
 
         return weatherData;
     }
 
-    public void setWeatherData(List<Weather> weatherData) {
+    public void setWeatherData(ArrayList<Weather> weatherData) {
         this.weatherData = weatherData;
     }
 
