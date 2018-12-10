@@ -32,6 +32,7 @@ import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.REngineException;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -118,16 +119,23 @@ public class SplahScreen extends AppCompatActivity{
                     c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/weather?q="+prefCity+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
 
                     REXP jsonData = c.eval("json_data <- fromJSON(file=json_file)");
+                    DecimalFormat f = new DecimalFormat("#0.00");
 
                     city = c.eval("json_data$name").asString();
                     Format yearFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     day = yearFormatter.format(Calendar.getInstance().getTime());
                     icon =  c.eval("json_data$weather[[1]]$icon").asString();
                     tempMax =  c.eval("json_data$main$temp_max").asDouble();
+                    tempMax = tempMax - 273.15;
+                    tempMax = Double.parseDouble(f.format(tempMax));
                     tempMin =  c.eval("json_data$main$temp_min").asDouble();
+                    tempMin = tempMin - 273.15;
+                    tempMin = Double.parseDouble(f.format(tempMin));
                     windSpeed =  c.eval("json_data$wind$speed").asDouble();
                     windDirection =  c.eval("json_data$wind$deg").asString();
                     double currentTmp = c.eval("json_data$main$temp").asDouble();
+                    currentTmp  = currentTmp - 273.15;
+                    currentTmp = Double.parseDouble(f.format(currentTmp));
                     int sunrise = c.eval("json_data$sys$sunrise").asInteger();
                     int sunset = c.eval("json_data$sys$sunset").asInteger();
                     Double humidity = c.eval("json_data$main$humidity").asDouble();
@@ -140,31 +148,35 @@ public class SplahScreen extends AppCompatActivity{
                     currentWeather.setSunset(String.valueOf(sunset));
                     currentWeather.setHumidity(humidity);
 
-                     ArrayList<Weather> weatherData = weatherList.getWeatherData();
-                     weatherData.add(currentWeather);
+                    ArrayList<Weather> weatherData = weatherList.getWeatherData();
+                    weatherData.add(currentWeather);
 
-                     //Wettertrend
-                     c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+prefCity+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
+                    //Wettertrend
+                    c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+prefCity+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
 
 
-                     jsonData = c.eval("json_data <- fromJSON(file=json_file)");
-                     int count = c.eval("json_data$cnt").asInteger();
-                     city = c.eval("json_data$city$name").asString();
-                     for (int i = 1 ; i < count ; i++) {
-                         Weather tmpWeather = null;
-                         day = c.eval("json_data$list[["+ i + "]]$dt_txt").asString();
-                         icon =  c.eval("json_data$list[["+ i + "]]$weather[[1]]$icon").asString();
-                         tempMax =  c.eval("json_data$list[["+ i + "]]$main$temp_max").asDouble();
-                         tempMin =  c.eval("json_data$list[[" + i + "]]$main$temp_min").asDouble();
-                         windSpeed =  c.eval("json_data$list[[" + i + "]]$wind$speed").asDouble();
-                         windDirection =  c.eval("json_data$list[[" + i + "]]$wind$deg").asString();
+                    jsonData = c.eval("json_data <- fromJSON(file=json_file)");
+                    int count = c.eval("json_data$cnt").asInteger();
+                    city = c.eval("json_data$city$name").asString();
+                    for (int i = 1 ; i < count ; i++) {
+                        Weather tmpWeather = null;
+                        day = c.eval("json_data$list[["+ i + "]]$dt_txt").asString();
+                        icon =  c.eval("json_data$list[["+ i + "]]$weather[[1]]$icon").asString();
+                        tempMax =  c.eval("json_data$list[["+ i + "]]$main$temp_max").asDouble();
+                        tempMax = tempMax - 273.15;
+                        tempMax = Double.parseDouble(f.format(tempMax));
+                        tempMin =  c.eval("json_data$list[[" + i + "]]$main$temp_min").asDouble();
+                        tempMin = tempMin - 273.15;
+                        tempMin = Double.parseDouble(f.format(tempMin));
+                        windSpeed =  c.eval("json_data$list[[" + i + "]]$wind$speed").asDouble();
+                        windDirection =  c.eval("json_data$list[[" + i + "]]$wind$deg").asString();
 
-                         tmpWeather = new Weather(city,day,icon, new Double(tempMax),
-                                 new Double(tempMin), new Double(windSpeed), windDirection);
+                        tmpWeather = new Weather(city,day,icon, new Double(tempMax),
+                                new Double(tempMin), new Double(windSpeed), windDirection);
 
-                         weatherData.add(tmpWeather);
+                        weatherData.add(tmpWeather);
 
-                     }
+                    }
 
                      weatherList.setWeatherData(weatherData);
                      weatherList.writeToFile(getFilesDir());

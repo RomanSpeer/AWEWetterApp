@@ -104,4 +104,8 @@ public class WeatherList {
 
     }
 
+    public void deleteDataFromList() {
+        this.weatherData = new ArrayList<Weather>();
+    }
+
 }

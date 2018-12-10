@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
 
             linearLayoutWeatherHome.setVisibility(View.VISIBLE);
 
-            textViewCityHome.setText(getResources().getString(R.string.fragment_home_city) + currentWeather.getCity());
+            textViewCityHome.setText(getResources().getString(R.string.fragment_home_city) + preferences.getString("cityName", ""));
             textViewTemperatureHome.setText(getResources().getString(R.string.fragment_home_temperature) + currentWeather.getCurrentTmp());
             textViewPrecipitationHome.setText(getResources().getString(R.string.fragment_home_precipitation) + currentWeather.getHumidity());
             textViewSunriseHome.setText(getResources().getString(R.string.fragment_home_sunrise) + sunrise);
