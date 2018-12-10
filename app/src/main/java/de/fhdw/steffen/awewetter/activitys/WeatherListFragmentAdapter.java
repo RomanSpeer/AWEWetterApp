@@ -25,7 +25,6 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
     Context mContext;
 
     private Server server;
-    private MyTask mt;
 
     // View lookup cache
     private static class ViewHolder {
@@ -35,8 +34,6 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
         TextView textViewMinTemp;
         TextView textViewWindSpeed;
         TextView textViewWindDirection;
-
-
     }
 
     public WeatherListFragmentAdapter(ArrayList<Weather> data, Context context) {
@@ -49,9 +46,6 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-
-        mt =  new MyTask();
-        mt.execute();
         // Get the data item for this position
         Weather dataModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -117,38 +111,11 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
         }
 
         viewHolder.textViewDay.setText(dataModel.getDayWeather());
-        viewHolder.textViewMaxTemp.setText(String.valueOf(dataModel.getTempMaxWeather()));
-        viewHolder.textViewMinTemp.setText(String.valueOf(dataModel.getTempMinWeather()));
-        viewHolder.textViewWindSpeed.setText(String.valueOf(dataModel.getWindSpeedWeather()));
-        viewHolder.textViewWindDirection .setText(dataModel.getWindDirectionWeather());
+        viewHolder.textViewMaxTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_max_temp) + String.valueOf(dataModel.getTempMaxWeather()));
+        viewHolder.textViewMinTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_min_temp) + String.valueOf(dataModel.getTempMinWeather()));
+        viewHolder.textViewWindSpeed.setText(getContext().getResources().getString(R.string.fragment_weather_list_windspeed) + String.valueOf(dataModel.getWindSpeedWeather()) + getContext().getResources().getString(R.string.fragment_weather_list_windspeed_unit));
+        viewHolder.textViewWindDirection .setText(getContext().getResources().getString(R.string.fragment_weather_list_wind_direction) + dataModel.getWindDirectionWeather());
         // Return the completed view to render on screen
         return convertView;
-    }
-
-    class MyTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                server = new Server().getServer();
-                server.connect("10.0.2.2");
-                if(server.isConnected())
-                    Log.d("Connection", "Verbunden");
-                RConnection c = server.getConnection();
-                REXP x = c.eval("R.version.string");
-            } catch (Exception x) {
-                x.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
     }
 }
