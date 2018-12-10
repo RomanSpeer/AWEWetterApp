@@ -39,8 +39,6 @@ public class WeatherGraphicFragment extends Fragment {
     private ImageView imageView2;
     private ImageView imageView3;
     private ImageView imageView4;
-    private ImageView imageView5;
-    private ImageView imageView6;
 
     private Server server;
     private MyTask mt;
@@ -65,8 +63,6 @@ public class WeatherGraphicFragment extends Fragment {
         imageView2 = viewWeatherGrapic.findViewById(R.id.imageView2);
         imageView3 = viewWeatherGrapic.findViewById(R.id.imageView3);
         imageView4 = viewWeatherGrapic.findViewById(R.id.imageView4);
-        imageView5 = viewWeatherGrapic.findViewById(R.id.imageView5);
-        imageView6 = viewWeatherGrapic.findViewById(R.id.imageView6);
 
         SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
 
@@ -80,8 +76,6 @@ public class WeatherGraphicFragment extends Fragment {
                 final File weatherImage2 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage2.png");
                 final File weatherImage3 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage3.png");
                 final File weatherImage4 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage4.png");
-                final File weatherImage5 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage5.png");
-                final File weatherImage6 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage6.png");
 
                 if (weatherImage1.exists()) {
                     Bitmap weatherBitmap1 = BitmapFactory.decodeFile(weatherImage1.getAbsolutePath());
@@ -109,20 +103,6 @@ public class WeatherGraphicFragment extends Fragment {
                     imageView1.setImageBitmap(weatherBitmap4);
                 } else {
                     imageView4.setImageResource(R.drawable.image_not_found);
-                }
-
-                if (weatherImage5.exists()) {
-                    Bitmap weatherBitmap5 = BitmapFactory.decodeFile(weatherImage5.getAbsolutePath());
-                    imageView1.setImageBitmap(weatherBitmap5);
-                } else {
-                    imageView5.setImageResource(R.drawable.image_not_found);
-                }
-
-                if (weatherImage6.exists()) {
-                    Bitmap weatherBitmap6 = BitmapFactory.decodeFile(weatherImage6.getAbsolutePath());
-                    imageView6.setImageBitmap(weatherBitmap6);
-                } else {
-                    imageView6.setImageResource(R.drawable.image_not_found);
                 }
             }
         }

@@ -161,13 +161,16 @@ public class HomeFragment extends Fragment {
                     textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_not_given));
                     break;
                 case "Fahrrad fahren":
-                    if(currentWeather.getTempMaxWeather()< 30 || currentWeather.getTempMinWeather() > 0)
+                    if((currentWeather.getTempMaxWeather()< 30 || currentWeather.getTempMinWeather() > 0) && !currentWeather.getIconWeather().equals("11d"))
                     {
-                        /*if(currentWeather.getDescritionWeather().equals"???")
+                        if(currentWeather.getWindSpeedWeather() > 5.0 && currentWeather.getWindSpeedWeather() <= 10)
                         {
                             textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_bad_good) + sportType);
-                        }*/
-                        textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_perfect) + sportType);
+                        }
+                        else if(currentWeather.getWindSpeedWeather()>= 10)
+                        {
+                            textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_bad) + sportType);
+                        }
                     }
                     else
                     {
@@ -175,13 +178,16 @@ public class HomeFragment extends Fragment {
                     }
                     break;
                 case "Laufen":
-                    if(currentWeather.getTempMaxWeather()< 25 || currentWeather.getTempMinWeather() > 5)
+                    if((currentWeather.getTempMaxWeather()< 25 || currentWeather.getTempMinWeather() > 5)&& !currentWeather.getIconWeather().equals("11d"))
                     {
-                        /*if(currentWeather.getDescritionWeather().equals"???")
+                        if(currentWeather.getWindSpeedWeather() > 8)
                         {
                             textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_bad_good) + sportType);
-                        }*/
-                        textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_perfect) + sportType);
+                        }
+                        else
+                        {
+                            textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_perfect) + sportType);
+                        }
                     }
                     else
                     {
@@ -189,16 +195,36 @@ public class HomeFragment extends Fragment {
                     }
                     break;
                 case "Fallschirmspringen":
-                        //????
+                    if(currentWeather.getWindSpeedWeather() >= 15 || currentWeather.getCurrentTmp() > 40 || currentWeather.getIconWeather().equals("10d") || currentWeather.getIconWeather().equals("11d") || currentWeather.getIconWeather().equals("13d") ||  currentWeather.getIconWeather().equals("50d") || currentWeather.getIconWeather().equals("03d"))
+                    {
+                        textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_bad) + sportType);
+                    }
+                    else
+                    {
+                        textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_perfect) + sportType);
+                    }
                     break;
                 case "Segeln":
-                    //????
+                    if(currentWeather.getCurrentTmp() > 40 || currentWeather.getIconWeather().equals("10d") || currentWeather.getIconWeather().equals("11d") || currentWeather.getIconWeather().equals("13d") ||  currentWeather.getIconWeather().equals("50d") || currentWeather.getIconWeather().equals("03d"))
+                    {
+                        textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_bad) + sportType);
+                    }
+                    else
+                    {
+                        if(currentWeather.getWindSpeedWeather() <= 5.0)
+                        {
+                            textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_bad_good) + sportType);
+                        }
+                        else
+                        {
+                            textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_perfect) + sportType);
+                        }
+
+                    }
                     break;
                 default:
                     textViewInformationHome.setVisibility(View.INVISIBLE);
             }
-
-            textViewInformationHome.setText(getResources().getString(R.string.fragment_home_information_not_given) + information);
         }
         else
         {
