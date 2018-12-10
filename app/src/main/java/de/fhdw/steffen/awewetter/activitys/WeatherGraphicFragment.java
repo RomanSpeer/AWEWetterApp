@@ -161,7 +161,7 @@ public class WeatherGraphicFragment extends Fragment {
                 connection.eval("}");
 
                 //Calculate Next
-                for(int i = 8; i > 0; i--) {
+                for(int i = 0; i < 8; i++) {
                     //Calculate Weather
                     connection.eval("diff <- avgForecast[items-8+"+i+"] - avgForecast[items-16+"+i+"]");
                     connection.eval("avgForecast <- c(avgForecast, avgForecast[items-8+"+i+"] + diff)");
