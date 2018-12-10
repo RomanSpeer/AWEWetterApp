@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import de.fhdw.steffen.awewetter.R;
 import de.fhdw.steffen.awewetter.classes.Server;
 import de.fhdw.steffen.awewetter.classes.Weather;
+import de.fhdw.steffen.awewetter.classes.WeatherList;
 
 public class WeatherListFragment extends Fragment{
 
@@ -64,17 +65,9 @@ public class WeatherListFragment extends Fragment{
         if (!preferences.getAll().isEmpty())
         {
             weatherArrayList = new ArrayList<>();
+            weatherArrayList = WeatherList.getWeatherList().getWeatherData();
 
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
-            weatherArrayList.add(new Weather("1","1","1",1d,1d,1d,"1"));
+            weatherArrayList.remove(0);
 
             adapter = new WeatherListFragmentAdapter(weatherArrayList,getActivity().getApplicationContext());
 

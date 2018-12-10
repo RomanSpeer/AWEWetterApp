@@ -27,6 +27,14 @@
     <string name="fragment_weather_list">Liste</string>
     <string name="fragment_weather_graphic">Grafiken</string>
 
+    <!-- Fragment weather list -->
+    <string name="fragment_weather_list_city">Stadt</string>
+    <string name="fragment_weather_list_min_temp">Min. Temperatur</string>
+    <string name="fragment_weather_list_max_temp">Max. Temperatur</string>
+    <string name="fragment_weather_list_windspeed">Windgeschwindigkeit</string>
+    <string name="fragment_weather_list_windspeed_unit">m/s</string>
+    <string name="fragment_weather_list_wind_direction">Liste</string>
+
     <!-- SplahScreen -->
     <string name="splahScreen_name">WetterMaster</string>
 </resources>
