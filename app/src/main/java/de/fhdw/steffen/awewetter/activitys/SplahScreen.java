@@ -179,6 +179,7 @@ public class SplahScreen extends AppCompatActivity{
 
                         }
 
+                        //Wetterdaten der Liste hinzufügen
                         weatherList.setWeatherData(weatherData);
                         weatherList.writeToFile(getFilesDir());
 

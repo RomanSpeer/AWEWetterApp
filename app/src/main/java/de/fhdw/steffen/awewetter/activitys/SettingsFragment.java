@@ -266,6 +266,7 @@ public class SettingsFragment extends Fragment {
 
                 }
 
+                //Wetterdaten der Liste hinzufügen
                 weatherList.setWeatherData(weatherData);
                 weatherList.writeToFile(null);
             } catch (Exception x) {

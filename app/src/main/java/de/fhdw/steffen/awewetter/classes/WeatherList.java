@@ -46,11 +46,20 @@ public class WeatherList {
         return weatherData;
     }
 
+    /**
+     * 
+     * @param weatherData
+     */
     public void setWeatherData(ArrayList<Weather> weatherData) {
         this.weatherData = weatherData;
     }
 
     //Quelle https://stackoverflow.com/questions/12910503/read-file-as-string
+
+    /**
+     *
+     * @param file
+     */
     public void writeToFile(File file) {
         try {
 
@@ -67,6 +76,14 @@ public class WeatherList {
         }
     }
 
+    //String aus einer Datei holen
+
+    /**
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
     public String readFromFile (File file) throws Exception {
         File fl = new File(file.getAbsolutePath()+"/WeatherData/weatherData.txt");
         FileInputStream fin = new FileInputStream(fl);
@@ -76,6 +93,14 @@ public class WeatherList {
         return ret;
     }
 
+    //Input Stream zu einem String machen
+
+    /**
+     *
+     * @param is
+     * @return
+     * @throws Exception
+     */
     public static String convertStreamToString(InputStream is) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
@@ -87,6 +112,13 @@ public class WeatherList {
         return sb.toString();
     }
 
+    //Wetter zu JsonString machen
+
+    /**
+     *
+     * @param weatherData
+     * @return
+     */
     private String toJSONString(List<Weather> weatherData) {
         Gson gson = new Gson();
         StringBuilder sb = new StringBuilder();
@@ -97,6 +129,13 @@ public class WeatherList {
         return sb.toString();
     }
 
+    //String zur Liste machen
+
+    /**
+     *
+     * @param weather
+     * @return
+     */
     public ArrayList<Weather> stringToList(String weather) {
         Gson gson = new Gson();
         TypeToken<List<Weather>> token = new TypeToken<List<Weather>>() {};
@@ -104,6 +143,7 @@ public class WeatherList {
 
     }
 
+    //Alle Daten aus der Wetterliste löschen
     public void deleteDataFromList() {
         this.weatherData = new ArrayList<Weather>();
     }
