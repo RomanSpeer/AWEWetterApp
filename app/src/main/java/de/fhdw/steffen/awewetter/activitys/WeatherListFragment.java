@@ -67,7 +67,7 @@ public class WeatherListFragment extends Fragment{
             weatherArrayList = new ArrayList<>();
             weatherArrayList = WeatherList.getWeatherList().getWeatherData();
 
-            weatherArrayList.remove(0);
+            //weatherArrayList.remove(0);
 
             adapter = new WeatherListFragmentAdapter(weatherArrayList,getActivity().getApplicationContext());
 

@@ -100,7 +100,7 @@ public class WeatherGraphicFragment extends Fragment {
 
                 if (weatherImage4.exists()) {
                     Bitmap weatherBitmap4 = BitmapFactory.decodeFile(weatherImage4.getAbsolutePath());
-                    imageView1.setImageBitmap(weatherBitmap4);
+                    imageView4.setImageBitmap(weatherBitmap4);
                 } else {
                     imageView4.setImageResource(R.drawable.image_not_found);
                 }
@@ -137,7 +137,7 @@ public class WeatherGraphicFragment extends Fragment {
                 connection.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+location+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
                 connection.eval("library(rjson)");
 
-                REXP jsonData = connection.eval("json_data <- fromJSON(file=json_file)");
+                REXP jsonData = connection.eval("result <- fromJSON(file=json_file)");
 
                 //Create lists
                 connection.eval("maxForecast <- c()");
@@ -151,14 +151,20 @@ public class WeatherGraphicFragment extends Fragment {
                 connection.eval("items <- result[[3]]");
 
                 //Get WeatherData
-                connection.eval("for (i in 1:items) {");
-                connection.eval("avgForecast <- c(avgForecast, result[[4]][[i]][[2]][[1]] - 273.15)");
-                connection.eval("maxForecast <- c(maxForecast, result[[4]][[i]][[2]][[3]] - 273.15)");
-                connection.eval("lowForecast <- c(lowForecast, result[[4]][[i]][[2]][[2]] - 273.15)");
-                connection.eval("pressure <- c(pressure, result[[4]][[i]][[2]][[4]])");
-                connection.eval("humidity <- c(pressure, result[[4]][[i]][[2]][[5]])");
-                connection.eval("windSpeed <- c(pressure, result[[4]][[i]][[5]][[1]])");
-                connection.eval("}");
+                connection.eval("for (i in 1:items) { " +
+                        "avgForecast <- c(avgForecast, result[[4]][[i]][[2]][[1]] - 273.15); " +
+                        "maxForecast <- c(maxForecast, result[[4]][[i]][[2]][[3]] - 273.15); " +
+                        "lowForecast <- c(lowForecast, result[[4]][[i]][[2]][[2]] - 273.15); " +
+                        "pressure <- c(pressure, result[[4]][[i]][[2]][[4]]); " +
+                        "humidity <- c(pressure, result[[4]][[i]][[2]][[5]]); " +
+                        " }");
+                //connection.eval("avgForecast <- c(avgForecast, result[[4]][[i]][[2]][[1]] - 273.15)");
+                //connection.eval("maxForecast <- c(maxForecast, result[[4]][[i]][[2]][[3]] - 273.15)");
+                //connection.eval("lowForecast <- c(lowForecast, result[[4]][[i]][[2]][[2]] - 273.15)");
+                //connection.eval("pressure <- c(pressure, result[[4]][[i]][[2]][[4]])");
+                //connection.eval("humidity <- c(pressure, result[[4]][[i]][[2]][[5]])");
+                //connection.eval("windSpeed <- c(pressure, result[[4]][[i]][[5]][[1]])");
+                //connection.eval("}");
 
                 //Calculate Next
                 for(int i = 8; i > 0; i--) {
@@ -183,12 +189,13 @@ public class WeatherGraphicFragment extends Fragment {
                     connection.eval("windSpeed <- c(windSpeed, windSpeed[items-8+"+i+"] + diff)");
                 }
                 //Plot Data
-                connection.eval("plot(avgForecast, type=\"o\", col=\"blue\")");
+                /*
+                connection.eval("plot(avgForecast, type=\"o\", col=\"blue\", ylab=\"Temperatur\")");
                 connection.eval("title(ylab=\"Temperatur\")");
                 //connection.eval("axis(side=1, at = 1:4, labels=LETTERS[1:4])");
                 connection.eval("lines(maxForecast, type=\"o\", col=\"red\")");
-                REXP plotWeather = connection.eval("lines(lowFrecast, type=\"o\", col=\"red\")");
-                Log.d("**WGF**","doInBackground: " + plotWeather.asString());
+                REXP plotWeather = connection.eval("lines(lowForecast, type=\"o\", col=\"red\")");
+                //Log.d("**WGF**","doInBackground: " + plotWeather.asString());
                 plotWeather.asBytes();
 
                 REXP plotPressure = connection.eval("plot(pressure, type=\"o\", col=\"blue\")");
@@ -203,7 +210,7 @@ public class WeatherGraphicFragment extends Fragment {
 
                 REXP plotWindSpeed = connection.eval("plot(windSpeed, type=\"o\", col=\"blue\")");
                 plotWindSpeed.asBytes();
-
+                */
 
             } catch (Exception x) {
                 x.printStackTrace();

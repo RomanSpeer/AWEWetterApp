@@ -76,6 +76,8 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
             result=convertView;
         }
 
+        dataModel.setIconWeather(dataModel.getIconWeather().replace('n','d'));
+
         switch (dataModel.getIconWeather())
         {
             case "01d":
@@ -111,10 +113,10 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
         }
 
         viewHolder.textViewDay.setText(dataModel.getDayWeather());
-        viewHolder.textViewMaxTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_max_temp) + String.valueOf(dataModel.getTempMaxWeather()));
-        viewHolder.textViewMinTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_min_temp) + String.valueOf(dataModel.getTempMinWeather()));
-        viewHolder.textViewWindSpeed.setText(getContext().getResources().getString(R.string.fragment_weather_list_windspeed) + String.valueOf(dataModel.getWindSpeedWeather()) + getContext().getResources().getString(R.string.fragment_weather_list_windspeed_unit));
-        viewHolder.textViewWindDirection .setText(getContext().getResources().getString(R.string.fragment_weather_list_wind_direction) + dataModel.getWindDirectionWeather());
+        viewHolder.textViewMaxTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_max_temp) + " " + String.valueOf(dataModel.getTempMaxWeather()));
+        viewHolder.textViewMinTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_min_temp) +  " " + String.valueOf(dataModel.getTempMinWeather()));
+        viewHolder.textViewWindSpeed.setText(getContext().getResources().getString(R.string.fragment_weather_list_windspeed) +  " " + String.valueOf(dataModel.getWindSpeedWeather()) + getContext().getResources().getString(R.string.fragment_weather_list_windspeed_unit));
+        viewHolder.textViewWindDirection .setText(getContext().getResources().getString(R.string.fragment_weather_list_wind_direction) + " " +  dataModel.getWindDirectionWeather());
         // Return the completed view to render on screen
         return convertView;
     }

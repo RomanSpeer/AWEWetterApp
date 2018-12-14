@@ -16,7 +16,7 @@
     <string name="fragment_home_temperature">Temperatur: </string>
     <string name="fragment_home_precipitation">Luftfeuchtigkeit: </string>
     <string name="fragment_home_sunrise">Sonnenaufgang: </string>
-    <string name="fragment_home_sunset">Sonnenuntergang:</string>
+    <string name="fragment_home_sunset">Sonnenuntergang: </string>
     <string name="fragment_home_information_perfect">Perfektes Wetter zum </string>
     <string name="fragment_home_information_bad">Wetter ist schlecht zum </string>
     <string name="fragment_home_information_bad_good">Wetter ist nicht zu schlecht und nicht zu gut zum </string>
@@ -33,7 +33,7 @@
     <string name="fragment_weather_list_max_temp">Max. Temperatur</string>
     <string name="fragment_weather_list_windspeed">Windgeschwindigkeit</string>
     <string name="fragment_weather_list_windspeed_unit">m/s</string>
-    <string name="fragment_weather_list_wind_direction">Liste</string>
+    <string name="fragment_weather_list_wind_direction">Windrichtung</string>
 
     <!-- SplahScreen -->
     <string name="splahScreen_name">WetterMaster</string>
