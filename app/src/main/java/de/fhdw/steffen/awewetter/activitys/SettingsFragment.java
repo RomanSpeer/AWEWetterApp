@@ -15,6 +15,8 @@ package de.fhdw.steffen.awewetter.activitys;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,6 +40,8 @@ import android.widget.Toast;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.Rserve.RConnection;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -263,8 +267,154 @@ public class SettingsFragment extends Fragment {
                             new Double(tempMin), new Double(windSpeed), windDirection);
 
                     weatherData.add(tmpWeather);
-
                 }
+
+                //Erstellung der Grafiken
+                SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                if(server.isConnected()) {
+                    String location = preferences.getString("cityName", "");
+                    if (location != "") {
+                        // Request Data
+                        c.eval("library(rjson)");
+                        c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
+
+                        c.eval("result <- fromJSON(file=json_file)");
+
+                        //Create lists
+                        c.eval("maxForecast <- c()");
+                        c.eval("avgForecast <- c()");
+                        c.eval("lowForecast <- c()");
+                        c.eval("pressure <- c()");
+                        c.eval("humidity <- c()");
+                        c.eval("windSpeed <- c()");
+                        c.eval("dates <- c()");
+
+                        //Get Some Data
+                        c.eval("items <- result[[3]]");
+
+                        //Get WeatherData
+                        c.eval("for (i in 1:items) {" +
+                                "dates <- c(dates, result[[4]][[i]][[8]]);" +
+                                "avgForecast <- c(avgForecast, result[[4]][[i]][[2]][[1]] - 273.15);" +
+                                "maxForecast <- c(maxForecast, result[[4]][[i]][[2]][[3]] - 273.15);" +
+                                "lowForecast <- c(lowForecast, result[[4]][[i]][[2]][[2]] - 273.15);" +
+                                "pressure <- c(pressure, result[[4]][[i]][[2]][[4]]);" +
+                                "humidity <- c(humidity, result[[4]][[i]][[2]][[5]]);" +
+                                "windSpeed <- c(windSpeed, result[[4]][[i]][[5]][[1]]);" +
+                                "}");
+
+                        //Calculate Next
+                        for (int i = 8; i > 0; i--) {
+                            //Calculate Weather
+                            c.eval("diff <- avgForecast[items-8+" + i + "] - avgForecast[items-16+" + i + "]");
+                            c.eval("avgForecast <- c(avgForecast, avgForecast[items-8+" + i + "] + diff)");
+
+                            c.eval("diff <- maxForecast[items-8+" + i + "] - maxForecast[items-16+" + i + "]");
+                            c.eval("maxForecast <- c(maxForecast, maxForecast[items-8+" + i + "] + diff)");
+
+                            c.eval("diff <- lowForecast[items-8+" + i + "] - lowForecast[items-16+" + i + "]");
+                            c.eval("lowForecast <- c(lowForecast, lowForecast[items-8+" + i + "] + diff)");
+
+                            //Calculate Weather attributes
+                            c.eval("diff <- pressure[items-8+" + i + "] - pressure[items-16+" + i + "]");
+                            c.eval("pressure <- c(pressure, pressure[items-8+" + i + "] + diff)");
+
+                            c.eval("diff <- humidity[items-8+" + i + "] - humidity[items-16+" + i + "]");
+                            c.eval("humidity <- c(humidity, humidity[items-8+" + i + "] + diff)");
+
+                            c.eval("diff <- windSpeed[items-8+" + i + "] - windSpeed[items-16+" + i + "]");
+                            c.eval("windSpeed <- c(windSpeed, windSpeed[items-8+" + i + "] + diff)");
+                        }
+
+                        //Define Opjects
+                        REXP image;
+                        Bitmap bmp;
+                        File file;
+                        FileOutputStream fOut;
+
+                        //Create Image
+                        c.eval("jpeg('weather.jpg',quality=90)");
+
+                        //Plot Weather
+                        c.parseAndEval("plot(avgForecast, type=\"o\", ylab=\"Temperature\", col=\"blue\"); " +
+                                "lines(maxForecast, type=\"o\", col=\"red\");" +
+                                "lines(lowForecast, type=\"o\", col=\"red\");" +
+                                "dev.off()");
+
+
+                        //Create Image from plot
+                        image = c.parseAndEval("r=readBin('weather.jpg','raw',1024*1024); unlink('weather.jpg'); r");
+
+                        //Convert Bytes To Image
+                        bmp = BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+
+                        //Save Image To Drive
+                        file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage1.png");
+                        fOut = new FileOutputStream(file);
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                        fOut.flush();
+                        fOut.close();
+
+                        //Create Image
+                        c.eval("jpeg('pressure.jpg',quality=90)");
+
+                        //plot Pressure
+                        c.parseAndEval("plot(pressure, type=\"o\", ylab=\"Presure\", col=\"blue\"); " +
+                                "dev.off()");
+
+                        //Create Image from plot
+                        image = c.parseAndEval("r=readBin('pressure.jpg','raw',1024*1024); unlink('pressure.jpg'); r");
+
+                        //Convert Bytes To Image
+                        bmp=BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+
+                        //Save Image To Drive
+                        file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage2.png");
+                        fOut = new FileOutputStream(file);
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                        fOut.flush();
+                        fOut.close();
+
+                        //Create Image
+                        c.eval("jpeg('humidity.jpg',quality=90)");
+
+                        //plot humidity
+                        c.parseAndEval("plot(humidity, type=\"o\", ylab=\"Humidity\", col=\"blue\"); " +
+                                "dev.off()");
+
+                        //Create Image from plot
+                        image = c.parseAndEval("r=readBin('humidity.jpg','raw',1024*1024); unlink('humidity.jpg'); r");
+
+                        //Convert Bytes To Image
+                        bmp=BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+
+                        //Save Image To Drive
+                        file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage3.png");
+                        fOut = new FileOutputStream(file);
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                        fOut.flush();
+                        fOut.close();
+
+                        //Create Image
+                        c.eval("jpeg('speed.jpg',quality=90)");
+
+                        //plot Windspeed
+                        c.parseAndEval("plot(windSpeed, type=\"o\", ylab=\"windspeed\", col=\"blue\"); " +
+                                "dev.off()");
+
+                        //Create Image from plot
+                        image = c.parseAndEval("r=readBin('speed.jpg','raw',1024*1024); unlink('speed.jpg'); r");
+
+                        //Convert Bytes To Image
+                        bmp = BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+
+                        //Save Image To Drive
+                        file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage4.png");
+                        fOut = new FileOutputStream(file);
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                        fOut.flush();
+                        fOut.close();
+                    }
 
                 //Wetterdaten der Liste hinzufügen
                 weatherList.setWeatherData(weatherData);
