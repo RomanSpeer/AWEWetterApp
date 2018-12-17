@@ -1,6 +1,6 @@
 /**
  * WeatherListFragment
- *
+ * <p>
  * Fragment, zur Darstellung der Wetterinformationen für
  * die nächsten Tage. Es wird die Temperatur, der Niderschlag,
  * ... angezeigt.
@@ -39,7 +39,7 @@ import de.fhdw.steffen.awewetter.classes.Server;
 import de.fhdw.steffen.awewetter.classes.Weather;
 import de.fhdw.steffen.awewetter.classes.WeatherList;
 
-public class WeatherListFragment extends Fragment{
+public class WeatherListFragment extends Fragment {
 
     private View viewWeatherLlist;
     ArrayList<Weather> weatherArrayList;
@@ -49,27 +49,38 @@ public class WeatherListFragment extends Fragment{
     private Server server;
     private MyTask mt;
 
+    /**
+     *
+     * Erstellen der WeatherListFragment-View
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return WeatherListFragment mit allen Darstellungen und Informationen
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mt =  new MyTask();
+        mt = new MyTask();
         mt.execute();
 
         viewWeatherLlist = inflater.inflate(R.layout.fragment_weather_list, container, false);
 
         listView = viewWeatherLlist.findViewById(R.id.list);
 
+        //Holen der SharedPreferences
         SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
 
-        if (!preferences.getAll().isEmpty())
-        {
+        //Prüfen ob die SharedPreferences leer sind
+        if (!preferences.getAll().isEmpty()) {
+            //Wetterdaten aus der Wetterliste holen
             weatherArrayList = new ArrayList<>();
             weatherArrayList = WeatherList.getWeatherList().getWeatherData();
 
             //weatherArrayList.remove(0);
-
-            adapter = new WeatherListFragmentAdapter(weatherArrayList,getActivity().getApplicationContext());
+            //Erstellen des Adapter für die Liste und speichern der Daten im Adapter
+            adapter = new WeatherListFragmentAdapter(weatherArrayList, getActivity().getApplicationContext());
 
             listView.setAdapter(adapter);
         }
@@ -89,7 +100,7 @@ public class WeatherListFragment extends Fragment{
             try {
                 server = new Server().getServer();
                 server.connect("10.0.2.2");
-                if(server.isConnected())
+                if (server.isConnected())
                     Log.d("Connection", "Verbunden");
                 RConnection c = server.getConnection();
                 REXP x = c.eval("R.version.string");

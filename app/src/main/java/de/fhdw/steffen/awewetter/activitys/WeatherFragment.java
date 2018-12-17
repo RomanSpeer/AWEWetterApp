@@ -1,6 +1,6 @@
 /**
  * WeatherFragment
- *
+ * <p>
  * Fragment, zur Darstellung der Tabbar,
  * sowie die Interaktionen mit dieser.
  *
@@ -39,24 +39,25 @@ public class WeatherFragment extends Fragment {
     private MyTask mt;
 
     /**
+     * Erstellen der WeatherFragment-View
      *
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return WeatherFragment mit allen Darstellungen und Informationen
      */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mt =  new MyTask();
+        mt = new MyTask();
         mt.execute();
 
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
-        // Setting ViewPager for each Tabs
+        //Setzen des ViewPager für jeden Tab
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        // Set Tabs inside Toolbar
+        // Setzen der Tabs in der Toolbar
         TabLayout tabs = (TabLayout) view.findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(viewPager);
 
@@ -66,12 +67,11 @@ public class WeatherFragment extends Fragment {
     }
 
     /**
+     * Hinzufügen der Fragmente zu den Tabs
      *
      * @param viewPager
      */
-    // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
-
         Adapter adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(new WeatherListFragment(), getResources().getString(R.string.fragment_weather_list));
         adapter.addFragment(new WeatherGraphicFragment(), getResources().getString(R.string.fragment_weather_graphic));
@@ -79,7 +79,7 @@ public class WeatherFragment extends Fragment {
     }
 
     /**
-     *
+     * Adapter für die Fragmente
      */
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -121,7 +121,7 @@ public class WeatherFragment extends Fragment {
             try {
                 server = new Server().getServer();
                 server.connect("10.0.2.2");
-                if(server.isConnected())
+                if (server.isConnected())
                     Log.d("Connection", "Verbunden");
                 RConnection c = server.getConnection();
                 REXP x = c.eval("R.version.string");

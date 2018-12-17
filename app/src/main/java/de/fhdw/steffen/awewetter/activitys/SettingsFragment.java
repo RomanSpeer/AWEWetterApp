@@ -5,7 +5,6 @@
  * Ist ein Ort mehrmals verfügbar kann der genaue Ort ausgewählt werden.
  * Bei Fehlerhaften eingaben werden Fehlermeldungen ausgegeben.
  *
- *
  * @author Steffen Höltje
  * @version 1.0
  */
@@ -55,12 +54,14 @@ import de.fhdw.steffen.awewetter.classes.WeatherList;
 
 public class SettingsFragment extends Fragment {
 
+    //Variablen für die View
     private View viewSettings;
     private LinearLayout linearLayoutCitySelect;
     private Spinner spinnerSport;
     private EditText editTextCity;
     private ImageButton btnSave;
 
+    //Variablen für das Wetter
     private String city = "";
     private String day = "";
     private String icon = "";
@@ -78,35 +79,35 @@ public class SettingsFragment extends Fragment {
     private MyTask mt;
 
     /**
+     * Erstellen der SettingsFragment-View
      *
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return SettingsFragent mit allen Darstellungen und Informationen
      */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mt =  new MyTask();
+        mt = new MyTask();
         mt.execute();
 
+        //Holen der Ressourcen aus den XML File
         viewSettings = inflater.inflate(R.layout.fragment_settings, container, false);
         linearLayoutCitySelect = viewSettings.findViewById(R.id.linearLayoutCitySelect);
         spinnerSport = viewSettings.findViewById(R.id.spinnerSport);
         editTextCity = viewSettings.findViewById(R.id.editTextCity);
         btnSave = viewSettings.findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener()
-        {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 btnSaveClick();
             }
         });
 
-        editTextCity.addTextChangedListener(new TextWatcher()
-        {
+        //Listener für die Eingabevalidierung des Ortes
+        editTextCity.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
@@ -116,9 +117,8 @@ public class SettingsFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s)  {
-                if(isClickSave == true)
-                {
+            public void afterTextChanged(Editable s) {
+                if (isClickSave == true) {
                     isClickSave = false;
                     editTextCity.setError(null);
                 }
@@ -127,14 +127,15 @@ public class SettingsFragment extends Fragment {
 
         linearLayoutCitySelect.setVisibility(View.INVISIBLE);
 
-        String[] items = new String[]{"Kein Sport","Fahrrad fahren", "Laufen", "Fallschirmspringen", "Segeln"};
+        //Setzen der verschiedenen Sportarten im DropDown
+        String[] items = new String[]{"Kein Sport", "Fahrrad fahren", "Laufen", "Fallschirmspringen", "Segeln"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(viewSettings.getContext(), android.R.layout.simple_dropdown_item_1line, items);
         spinnerSport.setAdapter(adapter);
 
+        //Holen der Informationen in SharedPreferences
         SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
 
-        if(!preferences.getAll().isEmpty())
-        {
+        if (!preferences.getAll().isEmpty()) {
             editTextCity.setText(preferences.getString("cityName", ""));
             spinnerSport.setSelection(adapter.getPosition(preferences.getString("sportType", "")));
         }
@@ -142,53 +143,62 @@ public class SettingsFragment extends Fragment {
         return viewSettings;
     }
 
+    /**
+     * Methode zum verstecken der Tastatur
+     *
+     * @param activity Ajtuelle Aktivity
+     */
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
+        //Holen der aktuellen View die im Vordergrund ist
         View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        //wenn keine View fokussiert ist wird eine neue erstellt
         if (view == null) {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * Methode die den Speicher-Button Klick regelt. Hier werden die Daten bezüglich Ort und Sport gespeichert, sowie
+     * alle Wetterinformationen vom Server geholt.
+     */
     private void btnSaveClick() {
-
+        //Verstecken der Tastatur
         hideKeyboard(getActivity());
+
         //city String
         cityName = editTextCity.getText().toString();
-        cityWithoutSpace = cityName.replaceAll(" ","");
+        cityWithoutSpace = cityName.replaceAll(" ", "");
 
         //sport string
         String sportName = spinnerSport.getSelectedItem().toString();
 
         isClickSave = true;
 
-        //check is city empty
-        if(cityName.isEmpty() || cityName.equals("") || cityWithoutSpace.equals(""))
-        {
-            //set error
+        //prüfen ob die Stadt leer ist
+        if (cityName.isEmpty() || cityName.equals("") || cityWithoutSpace.equals("")) {
+            //Error ausgeben
             Toast.makeText(getActivity(), "Bitte Stadt eingeben", Toast.LENGTH_LONG).show();
             editTextCity.setError("This field can not be blank");
-        }
-        else
-        {
-            //check if city exists
-            //nur einmal vorhanden dann speichern sonst auswahl anzeigen
-
+        } else {
             //speichern der Daten
             SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("cityName", cityName);
             editor.putString("sportType", sportName);
             editor.commit();
-            mt =  new MyTask();
+
+            //Holn der Daten vom Server
+            mt = new MyTask();
             mt.execute();
             Toast.makeText(getActivity(), "Daten gespeichert", Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     *
+     */
     class MyTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -208,7 +218,7 @@ public class SettingsFragment extends Fragment {
 
                 //aktuelles Wetter
                 c.eval("library(rjson)");
-                c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
+                c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
 
                 REXP jsonData = c.eval("json_data <- fromJSON(file=json_file)");
                 DecimalFormat f = new DecimalFormat("#0.00");
@@ -216,23 +226,23 @@ public class SettingsFragment extends Fragment {
                 city = c.eval("json_data$name").asString();
                 Format yearFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 day = yearFormatter.format(Calendar.getInstance().getTime());
-                icon =  c.eval("json_data$weather[[1]]$icon").asString();
-                tempMax =  c.eval("json_data$main$temp_max").asDouble();
+                icon = c.eval("json_data$weather[[1]]$icon").asString();
+                tempMax = c.eval("json_data$main$temp_max").asDouble();
                 tempMax = tempMax - 273.15;
                 tempMax = Double.parseDouble(f.format(tempMax));
-                tempMin =  c.eval("json_data$main$temp_min").asDouble();
+                tempMin = c.eval("json_data$main$temp_min").asDouble();
                 tempMin = tempMin - 273.15;
                 tempMin = Double.parseDouble(f.format(tempMin));
-                windSpeed =  c.eval("json_data$wind$speed").asDouble();
-                windDirection =  c.eval("json_data$wind$deg").asString();
+                windSpeed = c.eval("json_data$wind$speed").asDouble();
+                windDirection = c.eval("json_data$wind$deg").asString();
                 double currentTmp = c.eval("json_data$main$temp").asDouble();
-                currentTmp  = currentTmp - 273.15;
+                currentTmp = currentTmp - 273.15;
                 currentTmp = Double.parseDouble(f.format(currentTmp));
                 int sunrise = c.eval("json_data$sys$sunrise").asInteger();
                 int sunset = c.eval("json_data$sys$sunset").asInteger();
                 Double humidity = c.eval("json_data$main$humidity").asDouble();
 
-                currentWeather = new Weather(city,day,icon, new Double(tempMax),
+                currentWeather = new Weather(city, day, icon, new Double(tempMax),
                         new Double(tempMin), new Double(windSpeed), windDirection);
 
                 currentWeather.setCurrentTmp(currentTmp);
@@ -244,26 +254,26 @@ public class SettingsFragment extends Fragment {
                 weatherData.add(currentWeather);
 
                 //Wettertrend
-                c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q="+cityName+"&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
+                c.eval("json_file <- \"http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=f12d8e86e92a47da5effe7ac1cda7c72\"");
 
 
                 jsonData = c.eval("json_data <- fromJSON(file=json_file)");
                 int count = c.eval("json_data$cnt").asInteger();
                 city = c.eval("json_data$city$name").asString();
-                for (int i = 1 ; i < count ; i++) {
+                for (int i = 1; i < count; i++) {
                     Weather tmpWeather = null;
-                    day = c.eval("json_data$list[["+ i + "]]$dt_txt").asString();
-                    icon =  c.eval("json_data$list[["+ i + "]]$weather[[1]]$icon").asString();
-                    tempMax =  c.eval("json_data$list[["+ i + "]]$main$temp_max").asDouble();
+                    day = c.eval("json_data$list[[" + i + "]]$dt_txt").asString();
+                    icon = c.eval("json_data$list[[" + i + "]]$weather[[1]]$icon").asString();
+                    tempMax = c.eval("json_data$list[[" + i + "]]$main$temp_max").asDouble();
                     tempMax = tempMax - 273.15;
                     tempMax = Double.parseDouble(f.format(tempMax));
-                    tempMin =  c.eval("json_data$list[[" + i + "]]$main$temp_min").asDouble();
+                    tempMin = c.eval("json_data$list[[" + i + "]]$main$temp_min").asDouble();
                     tempMin = tempMin - 273.15;
                     tempMin = Double.parseDouble(f.format(tempMin));
-                    windSpeed =  c.eval("json_data$list[[" + i + "]]$wind$speed").asDouble();
-                    windDirection =  c.eval("json_data$list[[" + i + "]]$wind$deg").asString();
+                    windSpeed = c.eval("json_data$list[[" + i + "]]$wind$speed").asDouble();
+                    windDirection = c.eval("json_data$list[[" + i + "]]$wind$deg").asString();
 
-                    tmpWeather = new Weather(city,day,icon, new Double(tempMax),
+                    tmpWeather = new Weather(city, day, icon, new Double(tempMax),
                             new Double(tempMin), new Double(windSpeed), windDirection);
 
                     weatherData.add(tmpWeather);
@@ -271,7 +281,7 @@ public class SettingsFragment extends Fragment {
 
                 //Erstellung der Grafiken
                 SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-                if(server.isConnected()) {
+                if (server.isConnected()) {
                     String location = preferences.getString("cityName", "");
                     if (location != "") {
                         // Request Data
@@ -346,7 +356,7 @@ public class SettingsFragment extends Fragment {
                         image = c.parseAndEval("r=readBin('weather.jpg','raw',1024*1024); unlink('weather.jpg'); r");
 
                         //Convert Bytes To Image
-                        bmp = BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+                        bmp = BitmapFactory.decodeByteArray(image.asBytes(), 0, image.asBytes().length);
 
                         //Save Image To Drive
                         file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage1.png");
@@ -366,7 +376,7 @@ public class SettingsFragment extends Fragment {
                         image = c.parseAndEval("r=readBin('pressure.jpg','raw',1024*1024); unlink('pressure.jpg'); r");
 
                         //Convert Bytes To Image
-                        bmp=BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+                        bmp = BitmapFactory.decodeByteArray(image.asBytes(), 0, image.asBytes().length);
 
                         //Save Image To Drive
                         file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage2.png");
@@ -386,7 +396,7 @@ public class SettingsFragment extends Fragment {
                         image = c.parseAndEval("r=readBin('humidity.jpg','raw',1024*1024); unlink('humidity.jpg'); r");
 
                         //Convert Bytes To Image
-                        bmp=BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+                        bmp = BitmapFactory.decodeByteArray(image.asBytes(), 0, image.asBytes().length);
 
                         //Save Image To Drive
                         file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage3.png");
@@ -406,7 +416,7 @@ public class SettingsFragment extends Fragment {
                         image = c.parseAndEval("r=readBin('speed.jpg','raw',1024*1024); unlink('speed.jpg'); r");
 
                         //Convert Bytes To Image
-                        bmp = BitmapFactory.decodeByteArray(image.asBytes(),0,image.asBytes().length);
+                        bmp = BitmapFactory.decodeByteArray(image.asBytes(), 0, image.asBytes().length);
 
                         //Save Image To Drive
                         file = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage4.png");
@@ -416,21 +426,20 @@ public class SettingsFragment extends Fragment {
                         fOut.close();
                     }
 
-                //Wetterdaten der Liste hinzufügen
-                weatherList.setWeatherData(weatherData);
-                weatherList.writeToFile(null);
-            } catch (Exception x) {
-                x.printStackTrace();
+                    //Wetterdaten der Liste hinzufügen
+                    weatherList.setWeatherData(weatherData);
+                    weatherList.writeToFile(null);
+                } catch(Exception x){
+                    x.printStackTrace();
+                }
+                return null;
             }
-            return null;
+
+            @Override
+            protected void onPostExecute (Void result){
+                super.onPostExecute(result);
+            }
         }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
+
     }
-
-
-
-}

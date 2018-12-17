@@ -1,6 +1,6 @@
 /**
  * WeatherGraphicFragment
- *
+ * <p>
  * Fragment, zur Darstellung der Wetter-Grafiken.
  *
  * @author Steffen Höltje
@@ -36,6 +36,7 @@ import de.fhdw.steffen.awewetter.classes.Server;
 
 public class WeatherGraphicFragment extends Fragment {
 
+    //Variblen für die View
     private View viewWeatherGrapic;
     private ImageView imageView1;
     private ImageView imageView2;
@@ -49,18 +50,21 @@ public class WeatherGraphicFragment extends Fragment {
 
     /**
      *
+     * Erstellen der WeatherGraphicFragment-View
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return WeatherGraphicFragment mit allen Darstellungen und Informationen
      */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mt =  new MyTask();
+        mt = new MyTask();
         mt.execute();
 
+        //Holen der Ressourcen aus den XML File
         viewWeatherGrapic = inflater.inflate(R.layout.fragment_weather_graphic, container, false);
         imageView1 = viewWeatherGrapic.findViewById(R.id.imageView1);
         imageView2 = viewWeatherGrapic.findViewById(R.id.imageView2);
@@ -69,14 +73,17 @@ public class WeatherGraphicFragment extends Fragment {
         imageView5 = viewWeatherGrapic.findViewById(R.id.imageView5);
         imageView6 = viewWeatherGrapic.findViewById(R.id.imageView6);
 
+        //Holen der SharedPreferences
         SharedPreferences preferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
 
-        if (!preferences.getAll().isEmpty())
-        {
-            final File weatherDir = new File(getContext().getFilesDir().getAbsolutePath()+"/WeatherData");
+        //Prüfen ob die SharedPreferences leer sind
+        if (!preferences.getAll().isEmpty()) {
+            //Holen des Ordner-Pfads für die Bilder
+            final File weatherDir = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData");
 
-            if(weatherDir.exists())
-            {
+            //Prüfen ob der Ornder existiert
+            if (weatherDir.exists()) {
+                //Holen, prüfen, setzen der Bilder
                 final File weatherImage1 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage1.png");
                 final File weatherImage2 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage2.png");
                 final File weatherImage3 = new File(getContext().getFilesDir().getAbsolutePath() + "/WeatherData/weatherImage3.png");
@@ -135,7 +142,9 @@ public class WeatherGraphicFragment extends Fragment {
 
     class MyTask extends AsyncTask<Void, Void, Void> {
         @Override
-        protected void onPreExecute() { super.onPreExecute(); }
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
         @Override
         protected Void doInBackground(Void... params) {

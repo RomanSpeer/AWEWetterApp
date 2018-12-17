@@ -8,6 +8,7 @@
 package de.fhdw.steffen.awewetter.activitys;
 
 import de.fhdw.steffen.awewetter.classes.Server;
+
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,10 +23,12 @@ import de.fhdw.steffen.awewetter.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Variablen
     private DrawerLayout drawer;
     private Server server;
 
     /**
+     * onCreate-Methode, zum erstellen der Activity
      *
      * @param savedInstanceState
      */
@@ -42,46 +45,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigatiionView = findViewById(R.id.nav_view);
         navigatiionView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigatiionView.setCheckedItem(R.id.nav_home);
         }
     }
 
     /**
-     *
+     * Regelung, was passiert wenn der "Back-Button" gedrückt wird
      */
     @Override
     public void onBackPressed() {
 
-        if(drawer.isDrawerOpen(GravityCompat.START))
-        {
-            drawer.closeDrawer(GravityCompat.START );
-        }
-        else
-        {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
             super.onBackPressed();
         }
     }
 
     /**
+     * Entscheiden welche View angeglickt wurde und welche hierdurch angezeigt werden soll.
      *
-     * @param menuItem
-     * @return
+     * @param menuItem Ausgewählte Menüpunkt
+     * @return Fragment, welches neu angezeigt wird
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            break;
+                break;
 
             case R.id.nav_wetter:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WeatherFragment()).commit();
