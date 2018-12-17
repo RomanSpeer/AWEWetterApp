@@ -197,7 +197,7 @@ public class SettingsFragment extends Fragment {
     }
 
     /**
-     *
+     * Asynchroner Prozess, welcher die Daten holt sowie verarbeitet.
      */
     class MyTask extends AsyncTask<Void, Void, Void> {
         @Override

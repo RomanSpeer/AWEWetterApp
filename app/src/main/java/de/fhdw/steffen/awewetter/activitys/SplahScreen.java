@@ -100,7 +100,7 @@ public class SplahScreen extends AppCompatActivity {
     }
 
     /**
-     *
+     * Asynchroner Prozess, welcher die Daten holt sowie verarbeitet.
      */
     class MyTask extends AsyncTask<Void, Void, Void> {
         @Override
@@ -193,7 +193,7 @@ public class SplahScreen extends AppCompatActivity {
                         weatherList.setWeatherData(weatherData);
                         weatherList.writeToFile(getFilesDir());
 
-//Erstellung der Grafiken
+                        //Erstellung der Grafiken
                         SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                         if (server.isConnected()) {
                             String location = preferences.getString("cityName", "");

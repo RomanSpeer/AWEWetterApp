@@ -25,7 +25,7 @@ public class Weather {
 
 
     /**
-     * Leere Konstruktor
+     * Leerer Konstruktor
      */
     public Weather() {
 
@@ -115,62 +115,136 @@ public class Weather {
         return sunrise;
     }
 
+    /**
+     * Setzen des Sonnenaufgangszeit
+     * @param sunrise Zeit des Sonnenaufgangs
+     */
     public void setSunrise(String sunrise) {
         this.sunrise = sunrise;
     }
 
+    /**
+     * Zurückgeben der Stadt
+     *
+     * @return
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Setzen der Stadt
+     *
+     * @param city die Stadt
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * Zurückgeben des Datums
+     *
+     * @return Datum
+     */
     public String getDayWeather() {
         return dayWeather;
     }
 
+    /**
+     * Setzen des Datums
+     *
+     * @param dayWeather Datums
+     */
     public void setDayWeather(String dayWeather) {
         this.dayWeather = dayWeather;
     }
 
+    /**
+     * Zurückgeben des Icons
+     *
+     * @return Icon
+     */
     public String getIconWeather() {
         return iconWeather;
     }
 
+    /**
+     * Setzen des Icons
+     *
+     * @param iconWeather Icon
+     */
     public void setIconWeather(String iconWeather) {
         this.iconWeather = iconWeather;
     }
 
+    /**
+     * Zurückgeben der maximalen Temperatur
+     *
+     * @return maximale Temperatur
+     */
     public double getTempMaxWeather() {
         return tempMaxWeather;
     }
 
+    /**
+     * Setzen der maximalen Temperatur
+     *
+     * @param tempMaxWeather maximale Temperatur
+     */
     public void setTempMaxWeather(double tempMaxWeather) {
         this.tempMaxWeather = tempMaxWeather;
     }
 
+    /**
+     * zurückgeben der minimalen Temperatur
+     *
+     * @return minimale Temperatur
+     */
     public double getTempMinWeather() {
         return tempMinWeather;
     }
 
+    /**
+     * setzen der minimalen Temperatur
+     *
+     * @param tempMinWeather minimale Temperatur
+     */
     public void setTempMinWeather(double tempMinWeather) {
         this.tempMinWeather = tempMinWeather;
     }
 
+    /**
+     * zurückgeben der Windgeschwindigkeit
+     *
+     * @return Windgeschwindigkeit
+     */
     public double getWindSpeedWeather() {
         return windSpeedWeather;
     }
 
+    /**
+     * Setzen der Windgeschwindigkeit
+     *
+     * @param windSpeedWeather Windgeschwindigkeit
+     */
     public void setWindSpeedWeather(double windSpeedWeather) {
         this.windSpeedWeather = windSpeedWeather;
     }
 
+    /**
+     * Zurückgeben der Windrichtung
+     *
+     * @return Windrichtung
+     */
     public String getWindDirectionWeather() {
         return windDirectionWeather;
     }
 
+    /**
+     * Setzen der Windrichtung
+     *
+     * @param windDirectionWeather Windrichtung
+     */
     public void setWindDirectionWeather(String windDirectionWeather) {
         this.windDirectionWeather = windDirectionWeather;
     }

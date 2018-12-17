@@ -60,18 +60,18 @@ public class WeatherList {
     }
 
     /**
-     * ???
+     * Wetterdaten Liste setzten
      *
-     * @param weatherData ???
+     * @param weatherData Wetterdaten Liste
      */
     public void setWeatherData(ArrayList<Weather> weatherData) {
         this.weatherData = weatherData;
     }
 
     /**
-     * ??
+     * Wetterdaten in eine Datei schreiben
      *
-     * @param file ??
+     * @param file um den Dateipfad zu bekommen
      */
     public void writeToFile(File file) {
         try {
@@ -91,7 +91,7 @@ public class WeatherList {
     /**
      * String aus einer Datei holen
      *
-     * @param file ??
+     * @param file um den Dateipfad zu bekommen
      * @return
      * @throws Exception
      */
@@ -107,7 +107,7 @@ public class WeatherList {
     /**
      * Input Stream zu einem String machen
      *
-     * @param is ??
+     * @param is der InputStream des String der Datei
      * @return
      * @throws Exception
      */
@@ -143,8 +143,8 @@ public class WeatherList {
     /**
      * String zur Liste machen
      *
-     * @param weather ??
-     * @return ??
+     * @param weather Wetterdaten als String
+     * @return Wetterdaten als Liste
      */
     public ArrayList<Weather> stringToList(String weather) {
         Gson gson = new Gson();
