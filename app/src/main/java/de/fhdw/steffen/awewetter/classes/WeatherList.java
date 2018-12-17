@@ -1,3 +1,11 @@
+/**
+ * WeatherList-Klasse
+ * SingeltonListe mit allen Wetterobjekten
+ *
+ * @author Roman Speer, Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.classes;
 
 import android.content.Context;
@@ -21,71 +29,74 @@ import java.util.List;
 
 public class WeatherList {
 
+    //Variablen
     private static WeatherList weatherList;
-
     private ArrayList<Weather> weatherData = new ArrayList<Weather>();
 
-    public static WeatherList getWeatherList()
-    {
+    /**
+     * Erstellen/ zurückgeben der Wetterliste
+     *
+     * @return Singelton Wetterliste
+     */
+    public static WeatherList getWeatherList() {
         //Prüfen ob der Server null ist
-        if (weatherList == null)
-        {
+        if (weatherList == null) {
             //Neuen Server erstellen
             weatherList = new WeatherList();
         }
         return weatherList;
     }
 
-    private WeatherList()
-    {
+    private WeatherList() {
 
     }
 
+    /**
+     * @return zurückgeben der Wetterliste ArrayList
+     */
     public ArrayList<Weather> getWeatherData() {
 
         return weatherData;
     }
 
     /**
+     * ???
      *
-     * @param weatherData
+     * @param weatherData ???
      */
     public void setWeatherData(ArrayList<Weather> weatherData) {
         this.weatherData = weatherData;
     }
 
-    //Quelle https://stackoverflow.com/questions/12910503/read-file-as-string
-
     /**
+     * ??
      *
-     * @param file
+     * @param file ??
      */
     public void writeToFile(File file) {
         try {
 
-            final File weatherTxt = new File(file.getAbsolutePath()+"/WeatherData",  "weatherData.txt");
+            final File weatherTxt = new File(file.getAbsolutePath() + "/WeatherData", "weatherData.txt");
             FileOutputStream stream = new FileOutputStream(weatherTxt);
             try {
                 stream.write(toJSONString(weatherData).getBytes());
             } finally {
                 stream.close();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 
-    //String aus einer Datei holen
-
     /**
+     * String aus einer Datei holen
      *
-     * @param file
+     * @param file ??
      * @return
      * @throws Exception
      */
-    public String readFromFile (File file) throws Exception {
-        File fl = new File(file.getAbsolutePath()+"/WeatherData/weatherData.txt");
+    public String readFromFile(File file) throws Exception {
+        File fl = new File(file.getAbsolutePath() + "/WeatherData/weatherData.txt");
         FileInputStream fin = new FileInputStream(fl);
         String ret = convertStreamToString(fin);
         //Make sure you close all streams.
@@ -93,11 +104,10 @@ public class WeatherList {
         return ret;
     }
 
-    //Input Stream zu einem String machen
-
     /**
+     * Input Stream zu einem String machen
      *
-     * @param is
+     * @param is ??
      * @return
      * @throws Exception
      */
@@ -112,9 +122,8 @@ public class WeatherList {
         return sb.toString();
     }
 
-    //Wetter zu JsonString machen
-
     /**
+     * Wetter zu JsonString machen
      *
      * @param weatherData
      * @return
@@ -122,7 +131,7 @@ public class WeatherList {
     private String toJSONString(List<Weather> weatherData) {
         Gson gson = new Gson();
         StringBuilder sb = new StringBuilder();
-        for(Weather d : weatherData) {
+        for (Weather d : weatherData) {
             sb.append(gson.toJson(d));
         }
         String tmp = sb.toString();
@@ -132,18 +141,22 @@ public class WeatherList {
     //String zur Liste machen
 
     /**
+     * String zur Liste machen
      *
-     * @param weather
-     * @return
+     * @param weather ??
+     * @return ??
      */
     public ArrayList<Weather> stringToList(String weather) {
         Gson gson = new Gson();
-        TypeToken<List<Weather>> token = new TypeToken<List<Weather>>() {};
+        TypeToken<List<Weather>> token = new TypeToken<List<Weather>>() {
+        };
         return gson.fromJson(weather, token.getType());
 
     }
 
-    //Alle Daten aus der Wetterliste löschen
+    /**
+     * Alle Daten aus der Wetterliste löschen
+     */
     public void deleteDataFromList() {
         this.weatherData = new ArrayList<Weather>();
     }

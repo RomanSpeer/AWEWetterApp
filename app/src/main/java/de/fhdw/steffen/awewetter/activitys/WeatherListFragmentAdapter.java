@@ -1,3 +1,12 @@
+/**
+ * WeatherListFragmentAdapter
+ * <p>
+ * Adapter für die Darstellungg der Informationen in dem WeatherListFragment
+ *
+ * @author Steffen Höltje
+ * @version 1.0
+ */
+
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.content.Context;
@@ -19,14 +28,16 @@ import de.fhdw.steffen.awewetter.R;
 import de.fhdw.steffen.awewetter.classes.Server;
 import de.fhdw.steffen.awewetter.classes.Weather;
 
-public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
+public class WeatherListFragmentAdapter extends ArrayAdapter<Weather> {
 
     private ArrayList<Weather> dataSet;
     Context mContext;
 
     private Server server;
 
-    // View lookup cache
+    /**
+     * LoockUp-Chache anzeigen (Welche Viewelemente werden vorhanden sein)
+     */
     private static class ViewHolder {
         TextView textViewDay;
         ImageView imageViewIcon;
@@ -36,21 +47,33 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
         TextView textViewWindDirection;
     }
 
+    /**
+     * Konstruktor für den Adapter
+     *
+     * @param data    Liste der Wetterobjekte
+     * @param context Context in dem die Daten angezeigt werden sollen
+     */
     public WeatherListFragmentAdapter(ArrayList<Weather> data, Context context) {
         super(context, R.layout.fragment_weather_list_row_item, data);
         this.dataSet = data;
-        this.mContext=context;
+        this.mContext = context;
 
     }
 
+    /**
+     * Darstellen der Wetterinformationen
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        // Get the data item for this position
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Daten aus dem Array an einer bestimmten Position holen
         Weather dataModel = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
-
+        // Prüfen, ob eine vorhandene Ansicht wiederverwendet wird
+        ViewHolder viewHolder;
         final View result;
 
         if (convertView == null) {
@@ -59,6 +82,7 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.fragment_weather_list_row_item, parent, false);
 
+            ////Holen der Ressourcen aus den XML File
             viewHolder.textViewDay = (TextView) convertView.findViewById(R.id.textViewDay);
             viewHolder.imageViewIcon = convertView.findViewById(R.id.imageViewIcon);
             viewHolder.textViewMaxTemp = (TextView) convertView.findViewById(R.id.textViewMaxTemp);
@@ -66,20 +90,18 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
             viewHolder.textViewWindSpeed = (TextView) convertView.findViewById(R.id.textViewWindSpeed);
             viewHolder.textViewWindDirection = (TextView) convertView.findViewById(R.id.textViewWindDirection);
 
-            result=convertView;
+            result = convertView;
 
             convertView.setTag(viewHolder);
-        }
-        else
-            {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result=convertView;
+            result = convertView;
         }
 
-        dataModel.setIconWeather(dataModel.getIconWeather().replace('n','d'));
+        //Setzen des Icon für die jeweilige Wetterbeschreibung
+        dataModel.setIconWeather(dataModel.getIconWeather().replace('n', 'd'));
 
-        switch (dataModel.getIconWeather())
-        {
+        switch (dataModel.getIconWeather()) {
             case "01d":
                 viewHolder.imageViewIcon.setImageResource(R.drawable.sun01d);
                 break;
@@ -112,12 +134,13 @@ public class WeatherListFragmentAdapter extends ArrayAdapter<Weather>{
                 ;
         }
 
+        //Setzen der weiteren Informationen
         viewHolder.textViewDay.setText(dataModel.getDayWeather());
         viewHolder.textViewMaxTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_max_temp) + " " + String.valueOf(dataModel.getTempMaxWeather()));
-        viewHolder.textViewMinTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_min_temp) +  " " + String.valueOf(dataModel.getTempMinWeather()));
-        viewHolder.textViewWindSpeed.setText(getContext().getResources().getString(R.string.fragment_weather_list_windspeed) +  " " + String.valueOf(dataModel.getWindSpeedWeather()) + getContext().getResources().getString(R.string.fragment_weather_list_windspeed_unit));
-        viewHolder.textViewWindDirection .setText(getContext().getResources().getString(R.string.fragment_weather_list_wind_direction) + " " +  dataModel.getWindDirectionWeather());
-        // Return the completed view to render on screen
+        viewHolder.textViewMinTemp.setText(getContext().getResources().getString(R.string.fragment_weather_list_min_temp) + " " + String.valueOf(dataModel.getTempMinWeather()));
+        viewHolder.textViewWindSpeed.setText(getContext().getResources().getString(R.string.fragment_weather_list_windspeed) + " " + String.valueOf(dataModel.getWindSpeedWeather()) + getContext().getResources().getString(R.string.fragment_weather_list_windspeed_unit));
+        viewHolder.textViewWindDirection.setText(getContext().getResources().getString(R.string.fragment_weather_list_wind_direction) + " " + dataModel.getWindDirectionWeather());
+
         return convertView;
     }
 }
