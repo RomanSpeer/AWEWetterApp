@@ -47,7 +47,7 @@ public class WeatherList {
     }
 
     /**
-     * 
+     *
      * @param weatherData
      */
     public void setWeatherData(ArrayList<Weather> weatherData) {
