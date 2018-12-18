@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //Variablen
     private DrawerLayout drawer;
-    private Server server;
 
     /**
      * onCreate-Methode, zum erstellen der Activity

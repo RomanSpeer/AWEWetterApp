@@ -58,9 +58,6 @@ public class HomeFragment extends Fragment {
     private String sunrise = "";
     private String sunset = "";
 
-    private Server server;
-    private MyTask mt;
-
     /**
      *
      * Erstellen der HomeFragment-View
@@ -73,9 +70,6 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        mt = new MyTask();
-        mt.execute();
 
         //Holen der Ressourcen aus den XML File
         viewHome = inflater.inflate(R.layout.fragment_home, container, false);
@@ -212,36 +206,5 @@ public class HomeFragment extends Fragment {
         }
 
         return viewHome;
-    }
-
-    /**
-     *
-     */
-    class MyTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                server = new Server().getServer();
-                server.connect("10.0.2.2");
-                if (server.isConnected())
-                    Log.d("Connection", "Verbunden");
-                RConnection c = server.getConnection();
-                REXP x = c.eval("R.version.string");
-
-            } catch (Exception x) {
-                x.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
     }
 }

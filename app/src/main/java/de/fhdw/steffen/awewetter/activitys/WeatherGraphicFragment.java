@@ -13,26 +13,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-
-import org.rosuda.REngine.*;
-import org.rosuda.REngine.Rserve.*;
-
 import java.io.*;
 
 import de.fhdw.steffen.awewetter.R;
-import de.fhdw.steffen.awewetter.classes.Server;
 
 public class WeatherGraphicFragment extends Fragment {
 
@@ -44,9 +36,6 @@ public class WeatherGraphicFragment extends Fragment {
     private ImageView imageView4;
     private ImageView imageView5;
     private ImageView imageView6;
-
-    private Server server;
-    private MyTask mt;
 
     /**
      *
@@ -60,9 +49,6 @@ public class WeatherGraphicFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        mt = new MyTask();
-        mt.execute();
 
         //Holen der Ressourcen aus den XML File
         viewWeatherGrapic = inflater.inflate(R.layout.fragment_weather_graphic, container, false);
@@ -138,22 +124,5 @@ public class WeatherGraphicFragment extends Fragment {
 
         return viewWeatherGrapic;
 
-    }
-
-    class MyTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
     }
 }

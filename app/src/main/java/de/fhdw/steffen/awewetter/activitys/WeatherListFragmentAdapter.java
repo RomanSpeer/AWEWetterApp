@@ -10,8 +10,6 @@
 package de.fhdw.steffen.awewetter.activitys;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +17,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.rosuda.REngine.REXP;
-import org.rosuda.REngine.Rserve.RConnection;
-
 import java.util.ArrayList;
 
 import de.fhdw.steffen.awewetter.R;
-import de.fhdw.steffen.awewetter.classes.Server;
 import de.fhdw.steffen.awewetter.classes.Weather;
 
 public class WeatherListFragmentAdapter extends ArrayAdapter<Weather> {
 
     private ArrayList<Weather> dataSet;
     Context mContext;
-
-    private Server server;
 
     /**
      * LoockUp-Chache anzeigen (Welche Viewelemente werden vorhanden sein)
