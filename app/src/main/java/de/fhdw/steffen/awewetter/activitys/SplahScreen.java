@@ -10,6 +10,8 @@ package de.fhdw.steffen.awewetter.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +22,7 @@ import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.Rserve.RConnection;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
